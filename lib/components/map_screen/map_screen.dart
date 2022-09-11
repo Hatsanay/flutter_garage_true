@@ -1,18 +1,18 @@
-import 'package:crna_flutter/components/map_screen/map_screen.dart';
+import 'package:crna_flutter/components/home/home_screen.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required String title}) : super(key: key);
+class pinScreen extends StatefulWidget {
+  const pinScreen({Key? key, required String title}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<pinScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<pinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,18 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
-              icon: SvgPicture.asset("assets/icons/homeO.svg"),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: SvgPicture.asset("assets/icons/pin.svg"),
+              icon: SvgPicture.asset("assets/icons/home.svg"),
               onPressed: () {
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                        pageBuilder: (context, Animation<double> animation,
+                        pageBuilder: (BuildContext context,
+                            Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return pinScreen(
+                          return HomeScreen(
                             title: 'หน้าแรก',
                           );
                         },
@@ -64,6 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         transitionDuration: Duration(seconds: 0)));
               },
+            ),
+            IconButton(
+              icon: SvgPicture.asset("assets/icons/pinO.svg"),
+              onPressed: () {},
             ),
             IconButton(
               icon: SvgPicture.asset("assets/icons/files.svg"),
@@ -84,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
       elevation: 0,
       backgroundColor: kappbar,
       title: const Text(
-        'หน้าแรก',
+        'หน้าแผนที่',
         style: TextStyle(
           color: kPrimaryColor,
           fontWeight: FontWeight.normal,
