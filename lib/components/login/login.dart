@@ -34,8 +34,10 @@ class _MyWidgetState extends State<loginPage> {
             final prefs = await SharedPreferences.getInstance();
             await prefs.setString(token, token);
             //redirect
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                      title: 'หน้าแรก',
+                    )));
           } else {
             print(jsonRes['error']);
           }
