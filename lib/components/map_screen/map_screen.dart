@@ -1,7 +1,10 @@
 import 'package:crna_flutter/components/home/home_screen.dart';
+import 'package:crna_flutter/components/map_screen/googlemap.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../home/components/body.dart';
 
 //import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,7 +20,7 @@ class _HomeScreenState extends State<pinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      //body : const Body(),
+      body: MapSample(),
       //backgroundColor: kappbar,
       bottomNavigationBar: Container(
         height: 80,
