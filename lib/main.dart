@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'CRNA',
+      // home: loginPage(),
       home: loginPage(),
       // home: HomeScreen(),
     );

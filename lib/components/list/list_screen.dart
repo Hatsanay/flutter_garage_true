@@ -1,6 +1,6 @@
 import 'package:crna_flutter/components/home/home_screen.dart';
-import 'package:crna_flutter/components/list/list_screen.dart';
 import 'package:crna_flutter/components/map_screen/components/googlemap.dart';
+import 'package:crna_flutter/components/map_screen/map_screen.dart';
 import 'package:crna_flutter/components/profile/profile_screen.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
@@ -10,19 +10,19 @@ import '../home/components/body.dart';
 
 //import 'package:flutter_svg/flutter_svg.dart';
 
-class pinScreen extends StatefulWidget {
-  const pinScreen({Key? key, required String title}) : super(key: key);
+class listScreen extends StatefulWidget {
+  const listScreen({Key? key, required String title}) : super(key: key);
 
   @override
-  State<pinScreen> createState() => _HomeScreenState();
+  State<listScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<pinScreen> {
+class _HomeScreenState extends State<listScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: MapSample(),
+      // body: MapSample(),
       //backgroundColor: kappbar,
       bottomNavigationBar: Container(
         height: 80,
@@ -68,11 +68,7 @@ class _HomeScreenState extends State<pinScreen> {
               },
             ),
             IconButton(
-              icon: SvgPicture.asset("assets/icons/pinO.svg"),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: SvgPicture.asset("assets/icons/files.svg"),
+              icon: SvgPicture.asset("assets/icons/pin.svg"),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -80,8 +76,8 @@ class _HomeScreenState extends State<pinScreen> {
                         pageBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return listScreen(
-                            title: 'รายการ',
+                          return pinScreen(
+                            title: 'แผนที่',
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -98,6 +94,10 @@ class _HomeScreenState extends State<pinScreen> {
                         },
                         transitionDuration: Duration(seconds: 0)));
               },
+            ),
+            IconButton(
+              icon: SvgPicture.asset("assets/icons/fileso.svg"),
+              onPressed: () {},
             ),
             IconButton(
               icon: SvgPicture.asset("assets/icons/user.svg"),
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<pinScreen> {
       elevation: 0,
       backgroundColor: kappbar,
       title: const Text(
-        'หน้าแผนที่',
+        'หน้ารายการ',
         style: TextStyle(
           color: kPrimaryColor,
           fontWeight: FontWeight.normal,

@@ -1,4 +1,6 @@
+import 'package:crna_flutter/components/list/list_screen.dart';
 import 'package:crna_flutter/components/map_screen/map_screen.dart';
+import 'package:crna_flutter/components/profile/profile_screen.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
                           return pinScreen(
-                            title: 'หน้าแรก',
+                            title: 'แผนที่',
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -67,11 +69,57 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             IconButton(
               icon: SvgPicture.asset("assets/icons/files.svg"),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, Animation<double> animation,
+                            Animation<double> secondaryAnimation) {
+                          return listScreen(
+                            title: 'แผนที่',
+                          );
+                        },
+                        transitionsBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            Widget child) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: Offset(-2.0, 0.0),
+                              end: Offset(0.0, 0.0),
+                            ).animate(animation),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(seconds: 0)));
+              },
             ),
             IconButton(
               icon: SvgPicture.asset("assets/icons/user.svg"),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, Animation<double> animation,
+                            Animation<double> secondaryAnimation) {
+                          return profileScreen(
+                            title: 'โปรไฟล์',
+                          );
+                        },
+                        transitionsBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            Widget child) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: Offset(-2.0, 0.0),
+                              end: Offset(0.0, 0.0),
+                            ).animate(animation),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(seconds: 0)));
+              },
             ),
           ],
         ),
