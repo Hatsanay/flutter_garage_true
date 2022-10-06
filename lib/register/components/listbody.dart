@@ -1,17 +1,15 @@
 import 'package:crna_flutter/components/login/login.dart';
 import 'package:crna_flutter/constans.dart';
-import 'package:crna_flutter/register/listregister_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class welbody extends StatefulWidget {
-  const welbody({super.key});
+class listbody extends StatefulWidget {
+  const listbody({super.key});
 
   @override
-  State<welbody> createState() => _MyWidgetState();
+  State<listbody> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<welbody> {
+class _MyWidgetState extends State<listbody> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,17 +23,21 @@ class _MyWidgetState extends State<welbody> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(
-              top: 150,
-              left: 5,
+              top: 1,
+              left: 58,
               right: 5,
             ),
-            child: Image.asset(
-              'assets/icons/Logo.png',
+            child: Text(
+              "รายการลงทะเบียน",
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: kPrimaryColor),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 400,
+              top: 80,
               left: 13,
               right: 5,
             ),
@@ -65,18 +67,18 @@ class _MyWidgetState extends State<welbody> {
                         transitionDuration: Duration(seconds: 0)));
               },
               child: Text(
-                "เข้าสู่ระบบ",
+                "ผู้ใช้งานทั่วไป",
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
-              style: LoginButtonStyle,
+              style: UserregisButtonStyle,
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 465,
+              top: 190,
               left: 13,
               right: 5,
             ),
@@ -87,7 +89,7 @@ class _MyWidgetState extends State<welbody> {
                     PageRouteBuilder(
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return listRegisScreen(
+                          return loginPage(
                               // title: 'หน้าล็อกอิน',
                               );
                         },
@@ -106,14 +108,54 @@ class _MyWidgetState extends State<welbody> {
                         transitionDuration: Duration(seconds: 0)));
               },
               child: Text(
-                "ยังไม่เคยใช้ ลงทะเบียน!",
+                "อู่/ศูนย์ให้บริการ",
                 style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.brown,
-                  fontWeight: FontWeight.bold,
-                ),
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
-              style: RegisButtonStyle,
+              style: garageButtonStyle,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 300,
+              left: 13,
+              right: 5,
+            ),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, Animation<double> animation,
+                            Animation<double> secondaryAnimation) {
+                          return loginPage(
+                              // title: 'หน้าล็อกอิน',
+                              );
+                        },
+                        transitionsBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            Widget child) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: Offset(-2.0, 0.0),
+                              end: Offset(0.0, 0.0),
+                            ).animate(animation),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(seconds: 0)));
+              },
+              child: Text(
+                "ช่างอิสระ",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              style: machanicButtonStyle,
             ),
           ),
         ],
@@ -122,21 +164,31 @@ class _MyWidgetState extends State<welbody> {
   }
 }
 
-final ButtonStyle LoginButtonStyle = ElevatedButton.styleFrom(
+final ButtonStyle UserregisButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.black,
   primary: kButtonloginColor,
   minimumSize: Size(94, 55),
-  padding: EdgeInsets.symmetric(horizontal: 137),
+  padding: EdgeInsets.symmetric(horizontal: 110),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
   ),
 );
 
-final ButtonStyle RegisButtonStyle = ElevatedButton.styleFrom(
+final ButtonStyle garageButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.black,
-  primary: kButtonregis,
-  minimumSize: Size(88, 55),
-  padding: EdgeInsets.symmetric(horizontal: 80),
+  primary: kButtonloginColor,
+  minimumSize: Size(94, 55),
+  padding: EdgeInsets.symmetric(horizontal: 100),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+  ),
+);
+
+final ButtonStyle machanicButtonStyle = ElevatedButton.styleFrom(
+  onPrimary: Colors.black,
+  primary: kButtonloginColor,
+  minimumSize: Size(94, 55),
+  padding: EdgeInsets.symmetric(horizontal: 130),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
   ),
