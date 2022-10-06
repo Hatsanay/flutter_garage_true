@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+class homeBody extends StatefulWidget {
+  const homeBody({Key? key}) : super(key: key);
 
+  @override
+  State<homeBody> createState() => _homeBodyState();
+}
+
+class _homeBodyState extends State<homeBody> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -10,7 +15,7 @@ class Body extends StatelessWidget {
       children: <Widget>[
         Container(
           height: size.height * 0.2,
-          color: Colors.black,
+          color: Color.fromARGB(255, 241, 158, 32),
         )
       ],
     );

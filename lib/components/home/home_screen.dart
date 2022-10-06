@@ -1,3 +1,4 @@
+import 'package:crna_flutter/components/home/components/body.dart';
 import 'package:crna_flutter/components/list/list_screen.dart';
 import 'package:crna_flutter/components/map_screen/map_screen.dart';
 import 'package:crna_flutter/components/profile/profile_screen.dart';
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      //body : const Body(),
+      body: const homeBody(),
       //backgroundColor: kappbar,
       bottomNavigationBar: Container(
         height: 80,

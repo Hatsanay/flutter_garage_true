@@ -1,5 +1,6 @@
 import 'package:crna_flutter/components/login/login.dart';
 import 'package:crna_flutter/constans.dart';
+import 'package:crna_flutter/register/usersregister_screen.dart';
 import 'package:flutter/material.dart';
 
 class listbody extends StatefulWidget {
@@ -48,7 +49,7 @@ class _MyWidgetState extends State<listbody> {
                     PageRouteBuilder(
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return loginPage(
+                          return UserRegisScreen(
                               // title: 'หน้าล็อกอิน',
                               );
                         },

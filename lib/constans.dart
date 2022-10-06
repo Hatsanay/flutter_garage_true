@@ -10,4 +10,5 @@ const kappbar = Color.fromARGB(33, 177, 182, 190);
 const kTextColor = Color(0xFF3C4046);
 const kBackgoundColor = Color.fromARGB(255, 204, 201, 216);
 const kNavigationBar = Color.fromARGB(33, 177, 182, 190);
+const ktextfieleregis = Color.fromARGB(255, 211, 176, 162);
 const double KDefoultPadding = 20.0;
