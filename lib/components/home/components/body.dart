@@ -1,3 +1,4 @@
+import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 
 class homeBody extends StatefulWidget {
@@ -14,8 +15,22 @@ class _homeBodyState extends State<homeBody> {
     return Column(
       children: <Widget>[
         Container(
-          height: size.height * 0.2,
-          color: Color.fromARGB(255, 241, 158, 32),
+          // margin: new EdgeInsets.symmetric(horizontal: 10.0),
+          margin: const EdgeInsets.only(
+            left: 10.0,
+            right: 10.0,
+            top: 15.0,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: kPrimaryColor,
+              style: BorderStyle.solid,
+              // width: 8.0,
+              width: 90,
+            ),
+            borderRadius: BorderRadius.circular(20.0),
+            color: kPrimaryColor,
+          ),
         )
       ],
     );

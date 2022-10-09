@@ -25,11 +25,11 @@ class _MyWidgetState extends State<listbody> {
           Padding(
             padding: const EdgeInsets.only(
               top: 1,
-              left: 58,
+              left: 40,
               right: 5,
             ),
             child: Text(
-              "รายการลงทะเบียน",
+              "รายการสมัครสมาชิก",
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,

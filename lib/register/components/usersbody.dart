@@ -28,7 +28,7 @@ class _MyWidgetState extends State<userRegisBody> {
               right: 5,
             ),
             child: Text(
-              "ลงทะเบียนสำหรับ\nผู้ใช้งานทั่วไป",
+              "สมัครสมาชิกสำหรับ\nผู้ใช้งานทั่วไป",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 33,
@@ -121,11 +121,14 @@ class _MyWidgetState extends State<userRegisBody> {
               obscureText: true,
               // controller: _ctrlPassword,
               decoration: InputDecoration(
-                  fillColor: ktextfieleregis,
-                  filled: true,
-                  labelText: 'อีเมล',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+                fillColor: ktextfieleregis,
+                filled: true,
+                labelText: 'อีเมล',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  // borderSide:
+                ),
+              ),
             ),
           ),
           Padding(
@@ -183,7 +186,7 @@ class _MyWidgetState extends State<userRegisBody> {
                         transitionDuration: Duration(seconds: 0)));
               },
               child: Text(
-                "ลงทะเบียน",
+                "สมัครสมาชิก",
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
@@ -202,8 +205,8 @@ final ButtonStyle UserregisButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.black,
   primary: kButtonloginColor,
   minimumSize: Size(94, 55),
-  padding: EdgeInsets.symmetric(horizontal: 130),
+  padding: EdgeInsets.symmetric(horizontal: 120),
   shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    borderRadius: BorderRadius.all(Radius.circular(15.0)),
   ),
 );

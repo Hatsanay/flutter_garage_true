@@ -106,7 +106,7 @@ class _MyWidgetState extends State<welbody> {
                         transitionDuration: Duration(seconds: 0)));
               },
               child: Text(
-                "ยังไม่เคยใช้ ลงทะเบียน!",
+                "ยังไม่เคยใช้ สมัครสมาชิก!",
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.brown,
@@ -136,7 +136,7 @@ final ButtonStyle RegisButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.black,
   primary: kButtonregis,
   minimumSize: Size(88, 55),
-  padding: EdgeInsets.symmetric(horizontal: 80),
+  padding: EdgeInsets.symmetric(horizontal: 70),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
   ),
