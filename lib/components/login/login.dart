@@ -1,159 +1,240 @@
 import 'dart:convert';
+
 import 'package:crna_flutter/components/home/home_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crna_flutter/components/login/api_provider.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'api_provider.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class loginPage extends StatefulWidget {
-  loginPage({Key? key}) : super(key: key);
+  const loginPage({super.key});
 
   @override
-  State<loginPage> createState() => _MyWidgetState();
+  State<loginPage> createState() => _loginPageState();
 }
 
-class _MyWidgetState extends State<loginPage> {
+class _loginPageState extends State<loginPage> {
   TextEditingController _ctrlUsername = TextEditingController();
   TextEditingController _ctrlPassword = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  ApiProvider apiProvider = ApiProvider();
+  String apiUrl = Api.url;
 
-  Future doLogin() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        var rs =
-            await apiProvider.doLogin(_ctrlUsername.text, _ctrlPassword.text);
-        if (rs.statusCode == 200) {
-          print(rs.body);
-          var jsonRes = json.decode(rs.body);
-          if (jsonRes['ok']) {
-            String token = jsonRes['token'];
-            print(token);
-            final prefs = await SharedPreferences.getInstance();
-            await prefs.setString(token, token);
-            //redirect
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => HomeScreen(
-                      title: 'หน้าแรก',
-                    )));
-          } else {
-            print(jsonRes['error']);
-          }
-        } else {
-          print('การเชื่อมต่อเซฟเวอร์ผิดพลาด');
-        }
-      } catch (error) {
-        print(error);
-      }
+  String msgError = "";
+
+  getApi(String username, String password) async {
+    final res = await http.post(Uri.parse(apiUrl), body: {
+      "username": username,
+      "password": password,
+    });
+    final data = jsonDecode(res.body);
+
+    if (data['level'] == "1") {
+      print(data['msg'] +
+          " dan status : " +
+          data['level'] +
+          data['fullname'] +
+          data['id'] +
+          data['proflie']);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (c) => HomeScreen(
+          username: data['fullname'],
+          id: data['id'],
+          proflie: data['proflie'],
+          title: 'หน้าแรก',
+        ),
+      ));
+      _ctrlUsername.clear();
+      _ctrlPassword.clear();
+      setState(() {
+        msgError = "";
+      });
+      // }
+      // else if (data['level'] == "user") {
+      //   print(data['msg'] + " dan status : " + data['level']);
+      //   Navigator.of(context).push(MaterialPageRoute(
+      //       builder: (c) => HomePage(username: data['username'])));
+      //   _ctrlUsername.clear();
+      //   _ctrlPassword.clear();
+      //   setState(() {
+      //     msgError = "";
+      //   });
+    } else {
+      setState(() {
+        msgError = "Username atau Password Salah";
+      });
     }
+  }
+
+  bool _isVisible = false;
+
+  //Explict
+
+  //Method
+  Widget backButton() {
+    return IconButton(
+      icon: Icon(
+        Icons.navigate_before,
+        size: 36.0,
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
+//หัวข้อ
+  Widget content() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          showAppName(),
+          usernameText(),
+          passwordText(),
+        ],
+      ),
+    );
+  }
+
+//แสดงชื่อและโลโก้
+  Widget showAppName() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        showLogo(),
+        // showText(),
+      ],
+    );
+  }
+
+// โลโก้
+  Widget showLogo() {
+    return Container(
+      width: 350.0,
+      height: 150.0,
+      child: Image.asset('assets/icons/Logo.png'),
+    );
+  }
+
+// ชื่อ
+  Widget showText() {
+    return Text(
+      'เข้าสู่ระบบ',
+      style: TextStyle(fontSize: 30.0, fontFamily: ''),
+    );
+  }
+
+  Widget usernameText() {
+    return Container(
+      width: 320.0,
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'โปรดกรอกชื่อผู้ใช้(Username)!';
+          }
+          return null;
+        },
+        controller: _ctrlUsername,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            icon: Icon(
+              Icons.person,
+              size: 36.0,
+              color: kPrimaryColor,
+            ),
+            labelText: 'Username',
+            labelStyle: TextStyle(color: kPrimaryColor)),
+      ),
+    );
+  }
+
+////////////////////////
+/////เปิดดูรหัสผ่าน////////
+///////////////////////
+  IconButton visible() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _isVisible = !_isVisible;
+        });
+      },
+      icon: _isVisible ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+    );
+  }
+
+  Widget passwordText() {
+    return Container(
+      width: 320.0,
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'โปรดกรอกรหัสผ่าน(Password)!';
+          }
+          return null;
+        },
+        controller: _ctrlPassword,
+        obscureText: !_isVisible,
+        decoration: InputDecoration(
+            suffixIcon: visible(),
+            icon: Icon(
+              Icons.lock,
+              size: 36.0,
+              color: kPrimaryColor,
+            ),
+            labelText: 'Password',
+            labelStyle: TextStyle(color: kPrimaryColor)),
+      ),
+    );
+  }
+
+  Widget loginButton() {
+    return FloatingActionButton(
+      backgroundColor: kPrimaryColor,
+      child: Icon(
+        Icons.navigate_next,
+        size: 36.0,
+      ),
+      onPressed: () {},
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 25),
-              child: Text(
-                'เข้าสู่ระบบ',
-                style: TextStyle(
-                    fontSize: 30,
-                    color: kPrimaryColor,
-                    fontWeight: FontWeight.bold),
+        // key: _formKey,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 130),
+            child: Container(
+              // decoration: BoxDecoration(
+              //   gradient: RadialGradient(
+              //       colors: [Colors.white, Colors.orange.shade700], radius: 1.0),
+              // ),
+              child: Stack(
+                children: <Widget>[
+                  backButton(),
+                  content(),
+                  // loginButton(),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'โปรดกรอกชื่อผู้ใช้(Username)!';
-                  }
-                  return null;
-                },
-                controller: _ctrlUsername,
-                decoration: InputDecoration(
-                    fillColor: Colors.white70,
-                    filled: true,
-                    labelText: 'Username',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 3, left: 15, right: 15, bottom: 20),
-              child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'โปรดกรอกรหัสผ่าน(Password)!';
-                  }
-                  return null;
-                },
-                obscureText: true,
-                controller: _ctrlPassword,
-                decoration: InputDecoration(
-                    fillColor: Colors.white70,
-                    filled: true,
-                    labelText: 'Password',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => doLogin(),
-              child: Text(
-                'เข้าสู่ระบบ',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
-              style: LoginButtonStyle,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  'facebook',
-                  style: TextStyle(
-                      fontSize: 19,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: LogfaceButtonStyle,
-              ),
-            ),
-          ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
+        child: Icon(
+          Icons.navigate_next,
+          size: 36.0,
+        ),
+        onPressed: () {
+          getApi(_ctrlUsername.text, _ctrlPassword.text);
+        },
       ),
     );
   }
 }
-
-final ButtonStyle LoginButtonStyle = ElevatedButton.styleFrom(
-  onPrimary: Colors.black,
-  primary: kButtonloginColor,
-  minimumSize: Size(90, 50),
-  padding: EdgeInsets.symmetric(horizontal: 135),
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-  ),
-);
-
-final ButtonStyle LogfaceButtonStyle = ElevatedButton.styleFrom(
-  onPrimary: Colors.black,
-  primary: Colors.blue,
-  minimumSize: Size(90, 50),
-  padding: EdgeInsets.symmetric(horizontal: 140),
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-  ),
-);

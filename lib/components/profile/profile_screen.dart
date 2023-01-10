@@ -10,7 +10,19 @@ import '../home/components/body.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class profileScreen extends StatefulWidget {
-  const profileScreen({Key? key, required String title}) : super(key: key);
+  final String username;
+
+  final String id;
+
+  final String proflie;
+
+  profileScreen(
+      {Key? key,
+      required String title,
+      required this.username,
+      required this.proflie,
+      required this.id})
+      : super(key: key);
 
   @override
   State<profileScreen> createState() => _HomeScreenState();
@@ -48,8 +60,10 @@ class _HomeScreenState extends State<profileScreen> {
                             Animation<double> animation,
                             Animation<double> secondaryAnimation) {
                           return HomeScreen(
-                            title: 'หน้าแรก',
-                          );
+                              title: 'หน้าแรก',
+                              username: widget.username,
+                              id: widget.id,
+                              proflie: widget.proflie);
                         },
                         transitionsBuilder: (BuildContext context,
                             Animation<double> animation,
@@ -77,6 +91,9 @@ class _HomeScreenState extends State<profileScreen> {
                             Animation<double> secondaryAnimation) {
                           return pinScreen(
                             title: 'แผนที่',
+                            id: widget.id,
+                            username: widget.username,
+                            proflie: widget.proflie,
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -105,6 +122,9 @@ class _HomeScreenState extends State<profileScreen> {
                             Animation<double> secondaryAnimation) {
                           return listScreen(
                             title: 'รายการ',
+                            id: widget.id,
+                            username: widget.username,
+                            proflie: widget.proflie,
                           );
                         },
                         transitionsBuilder: (BuildContext context,

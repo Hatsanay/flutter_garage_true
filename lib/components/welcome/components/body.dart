@@ -1,6 +1,7 @@
 import 'package:crna_flutter/components/login/login.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:crna_flutter/register/listregister_screen.dart';
+import 'package:crna_flutter/register/usersregister_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -87,7 +88,7 @@ class _MyWidgetState extends State<welbody> {
                     PageRouteBuilder(
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return listRegisScreen(
+                          return UserRegisScreen(
                               // title: 'หน้าล็อกอิน',
                               );
                         },

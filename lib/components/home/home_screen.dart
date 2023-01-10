@@ -9,8 +9,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required String title}) : super(key: key);
+  final String username;
+  final String id;
 
+  final String proflie;
+  HomeScreen(
+      {Key? key,
+      required String title,
+      required this.username,
+      required this.proflie,
+      required this.id})
+      : super(key: key);
+  // final String username;
+
+  // HomeScreen({required this.username});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -20,7 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: const homeBody(),
+      body: homeBody(
+        username: widget.username,
+        id: widget.id,
+        proflie: widget.proflie,
+      ),
       //backgroundColor: kappbar,
       bottomNavigationBar: Container(
         height: 80,
@@ -51,6 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             Animation<double> secondaryAnimation) {
                           return pinScreen(
                             title: 'แผนที่',
+                            username: widget.username,
+                            id: widget.id,
+                            proflie: widget.proflie,
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -78,6 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             Animation<double> secondaryAnimation) {
                           return listScreen(
                             title: 'แผนที่',
+                            id: widget.id,
+                            username: widget.username,
+                            proflie: widget.proflie,
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -105,6 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             Animation<double> secondaryAnimation) {
                           return profileScreen(
                             title: 'โปรไฟล์',
+                            id: widget.id,
+                            username: widget.username,
+                            proflie: widget.proflie,
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -132,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppBar(
       elevation: 0,
       backgroundColor: kappbar,
-      title: const Text(
+      title: Text(
         'หน้าแรก',
         style: TextStyle(
           color: kPrimaryColor,
