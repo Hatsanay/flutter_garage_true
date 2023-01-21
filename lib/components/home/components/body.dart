@@ -1,5 +1,8 @@
+import 'package:crna_flutter/components/home/components/GarageProvider.dart';
+import 'package:crna_flutter/components/home/components/garageItemcard.dart';
 import 'package:crna_flutter/components/home/components/machanicPage.dart';
 import 'package:crna_flutter/components/home/components/garagelistPage.dart';
+import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,10 +24,15 @@ class homeBody extends StatefulWidget {
 }
 
 class _homeBodyState extends State<homeBody> {
-  Future getContactData() async {
-    var url = 'http://192.168.1.101/flutter_login/getlistgarage.php';
+  static Future<List<Map<String, dynamic>>> fetchData() async {
+    var url = 'http://192.168.1.101/flutter_login/getlistcoffee.php';
     var response = await http.get(Uri.parse(url));
-    return jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((d) => Map<String, dynamic>.from(d)).toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 
   @override
@@ -44,8 +52,8 @@ class _homeBodyState extends State<homeBody> {
                   width: width,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          // image: AssetImage("assets/header.jpg"),
-                          image: NetworkImage(widget.proflie),
+                          image: AssetImage("assetsimages/cuspro/test1.png"),
+                          // image: NetworkImage(widget.proflie),
                           fit: BoxFit.cover)),
                   child: Container(
                     decoration: BoxDecoration(
@@ -95,14 +103,14 @@ class _homeBodyState extends State<homeBody> {
                     child: Column(
                       children: <Widget>[
                         TabBar(
-                          labelColor: Colors.black,
+                          labelColor: kPrimaryColor,
                           labelStyle: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                           unselectedLabelColor: Colors.grey[400],
                           unselectedLabelStyle: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 17),
                           indicatorSize: TabBarIndicatorSize.label,
-                          indicatorColor: Colors.transparent,
+                          indicatorColor: kPrimaryColor,
                           tabs: <Widget>[
                             Tab(
                               child: Text("อู่"),
@@ -144,9 +152,28 @@ class _homeBodyState extends State<homeBody> {
                           height: height * 0.6,
                           child: TabBarView(
                             children: <Widget>[
-                              HotCoffeePage(),
-                              ColdCoffeePage(),
-                              // OrtherPage(),
+                              FutureBuilder<List<Map<String, dynamic>>>(
+                                future: GarageProvider.fetchData(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return ListView.builder(
+                                      itemCount: snapshot.data?.length,
+                                      itemBuilder: (context, index) {
+                                        return MenuItemCard(
+                                            garage: snapshot.data![index]);
+                                      },
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                        child: Text("${snapshot.error}"));
+                                  } else {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                },
+                              ),
+                              machanicpage(),
+// OrtherPage(),
                             ],
                           ),
                         )

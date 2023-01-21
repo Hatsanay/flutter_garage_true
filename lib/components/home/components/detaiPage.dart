@@ -2,9 +2,8 @@ import 'package:crna_flutter/components/home/components/garageModel.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
-  final int index;
-
-  DetailPage({Key? key, required this.index}) : super(key: key);
+  final Map<String, dynamic> garage;
+  DetailPage({Key? key, required this.garage}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -28,7 +27,7 @@ class _DetailPageState extends State<DetailPage> {
                 height: height * 0.55,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(menu[widget.index].image),
+                        image: NetworkImage(widget.garage['garageprofile']),
                         fit: BoxFit.cover)),
                 child: Container(
                   decoration: BoxDecoration(
@@ -56,7 +55,7 @@ class _DetailPageState extends State<DetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      menu[widget.index].name,
+                      widget.garage['garagename'],
                       style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -69,7 +68,7 @@ class _DetailPageState extends State<DetailPage> {
                       height: 50,
                       width: width,
                       child: ListView.builder(
-                        itemCount: menu[widget.index].rate,
+                        itemCount: int.parse(widget.garage['garagedeegree']),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, int key) {
                           return Icon(
@@ -84,7 +83,7 @@ class _DetailPageState extends State<DetailPage> {
                       height: 10,
                     ),
                     Text(
-                      "Description",
+                      "ที่อยู่",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -94,7 +93,7 @@ class _DetailPageState extends State<DetailPage> {
                       height: 8,
                     ),
                     Text(
-                      menu[widget.index].desc,
+                      widget.garage['address'],
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -115,16 +114,16 @@ class _DetailPageState extends State<DetailPage> {
                               " ",
                               style: TextStyle(
                                   color: Colors.grey[500],
-                                  fontSize: 16,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w600),
                             ),
-                            Text(
-                              menu[widget.index].price.toString() + "ก.ม.",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold),
-                            )
+                            // Text(
+                            //   "menu[widget.index]" + "ก.ม.",
+                            //   style: TextStyle(
+                            //       color: Colors.black,
+                            //       fontSize: 28,
+                            //       fontWeight: FontWeight.bold),
+                            // )
                           ],
                         ),
                         // RaisedButton(

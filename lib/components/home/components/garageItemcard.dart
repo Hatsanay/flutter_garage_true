@@ -1,11 +1,13 @@
 import 'package:crna_flutter/components/home/components/garageModel.dart';
 import 'package:crna_flutter/components/home/components/detaiPage.dart';
+import 'package:crna_flutter/constans.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MenuItemCard extends StatelessWidget {
-  final int index;
+  final Map<String, dynamic> garage;
 
-  MenuItemCard({required this.index});
+  MenuItemCard({required this.garage});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class MenuItemCard extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailPage(
-                                index: index,
+                                garage: garage,
                               )));
                 },
                 child: Row(
@@ -31,8 +33,8 @@ class MenuItemCard extends StatelessWidget {
                       aspectRatio: 1 / 1,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          menu[index].image,
+                        child: Image.network(
+                          garage['garageprofile'],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -47,25 +49,27 @@ class MenuItemCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            menu[index].name,
+                            garage['garagename'],
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                color: kPrimaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            menu[index].shortDesc,
+                            garage['address'],
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 10,
                                 color: Colors.grey[500],
                                 fontWeight: FontWeight.w300),
                           ),
                           SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            menu[index].price.toString() + "ก.ม. ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          )
+                          // Text(
+                          //   "2" + "ก.ม. ",
+                          //   style: TextStyle(
+                          //       fontWeight: FontWeight.bold, fontSize: 18),
+                          // )
                         ],
                       ),
                     ),
@@ -75,9 +79,9 @@ class MenuItemCard extends StatelessWidget {
               IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  Icons.add_circle,
-                  color: Colors.brown[600],
-                  size: 36,
+                  CupertinoIcons.wrench_fill,
+                  color: kPrimaryColor,
+                  size: 25,
                 ),
               )
             ],

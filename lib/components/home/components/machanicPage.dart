@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColdCoffeePage extends StatelessWidget {
+class machanicpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
