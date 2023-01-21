@@ -46,6 +46,7 @@ dependencies:
   geolocator: ^9.0.2
   google_fonts: ^3.0.1
   mysql1: ^0.20.0
+  flutter_animate: 1.0.0
   
 
 dev_dependencies:

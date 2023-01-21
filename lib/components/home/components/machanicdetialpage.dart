@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class DetailPage extends StatefulWidget {
-  final Map<String, dynamic> garage;
-  DetailPage({Key? key, required this.garage}) : super(key: key);
+class machanicDetailPage extends StatefulWidget {
+  final Map<String, dynamic> machanic;
+  machanicDetailPage({Key? key, required this.machanic}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPageState extends State<machanicDetailPage> {
   bool _like = false;
 
   @override
@@ -26,7 +26,7 @@ class _DetailPageState extends State<DetailPage> {
                 height: height * 0.55,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(widget.garage['garageprofile']),
+                        image: NetworkImage(widget.machanic['mechanicprofile']),
                         fit: BoxFit.cover)),
                 child: Container(
                   decoration: BoxDecoration(
@@ -54,7 +54,7 @@ class _DetailPageState extends State<DetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      widget.garage['garagename'],
+                      widget.machanic['mechanicfullname'],
                       style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class _DetailPageState extends State<DetailPage> {
                       height: 50,
                       width: width,
                       child: ListView.builder(
-                        itemCount: int.parse(widget.garage['garagedeegree']),
+                        itemCount: 3,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, int key) {
                           return Icon(
@@ -92,7 +92,7 @@ class _DetailPageState extends State<DetailPage> {
                       height: 8,
                     ),
                     Text(
-                      widget.garage['address'],
+                      widget.machanic['address'],
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,

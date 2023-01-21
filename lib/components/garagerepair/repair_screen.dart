@@ -1,43 +1,45 @@
-import 'package:crna_flutter/components/home/home_screen.dart';
+import 'package:crna_flutter/components/garagerepair/conponents/body.dart';
+import 'package:crna_flutter/components/home/components/body.dart';
 import 'package:crna_flutter/components/list/list_screen.dart';
 import 'package:crna_flutter/components/map_screen/map_screen.dart';
-import 'package:crna_flutter/components/profile/components/profilebody.dart';
+import 'package:crna_flutter/components/profile/profile_screen.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../home/components/body.dart';
-
 //import 'package:flutter_svg/flutter_svg.dart';
 
-class profileScreen extends StatefulWidget {
+class repairscreen extends StatefulWidget {
   final String username;
-
   final String id;
+  final Map<String, dynamic> garage;
 
   final String proflie;
+  repairscreen({
+    Key? key,
+    required String title,
+    required this.username,
+    required this.proflie,
+    required this.id,
+    required this.garage,
+  }) : super(key: key);
+  // final String username;
 
-  profileScreen(
-      {Key? key,
-      required String title,
-      required this.username,
-      required this.proflie,
-      required this.id})
-      : super(key: key);
-
+  // HomeScreen({required this.username});
   @override
-  State<profileScreen> createState() => _HomeScreenState();
+  State<repairscreen> createState() => _repairscreenState();
 }
 
-class _HomeScreenState extends State<profileScreen> {
+class _repairscreenState extends State<repairscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: profilebody(
+      body: repairBody(
         username: widget.username,
         id: widget.id,
         proflie: widget.proflie,
+        garage: widget.garage,
       ),
       //backgroundColor: kappbar,
       bottomNavigationBar: Container(
@@ -56,34 +58,8 @@ class _HomeScreenState extends State<profileScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
-              icon: SvgPicture.asset("assets/icons/home.svg"),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                        pageBuilder: (BuildContext context,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation) {
-                          return HomeScreen(
-                              title: 'หน้าแรก',
-                              username: widget.username,
-                              id: widget.id,
-                              proflie: widget.proflie);
-                        },
-                        transitionsBuilder: (BuildContext context,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                            Widget child) {
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                              begin: Offset(-2.0, 0.0),
-                              end: Offset(0.0, 0.0),
-                            ).animate(animation),
-                            child: child,
-                          );
-                        },
-                        transitionDuration: Duration(seconds: 0)));
-              },
+              icon: SvgPicture.asset("assets/icons/homeO.svg"),
+              onPressed: () {},
             ),
             IconButton(
               icon: SvgPicture.asset("assets/icons/pin.svg"),
@@ -91,13 +67,12 @@ class _HomeScreenState extends State<profileScreen> {
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                        pageBuilder: (BuildContext context,
-                            Animation<double> animation,
+                        pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
                           return pinScreen(
                             title: 'แผนที่',
-                            id: widget.id,
                             username: widget.username,
+                            id: widget.id,
                             proflie: widget.proflie,
                           );
                         },
@@ -122,11 +97,10 @@ class _HomeScreenState extends State<profileScreen> {
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                        pageBuilder: (BuildContext context,
-                            Animation<double> animation,
+                        pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
                           return listScreen(
-                            title: 'รายการ',
+                            title: 'แผนที่',
                             id: widget.id,
                             username: widget.username,
                             proflie: widget.proflie,
@@ -148,8 +122,34 @@ class _HomeScreenState extends State<profileScreen> {
               },
             ),
             IconButton(
-              icon: SvgPicture.asset("assets/icons/usero.svg"),
-              onPressed: () {},
+              icon: SvgPicture.asset("assets/icons/user.svg"),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, Animation<double> animation,
+                            Animation<double> secondaryAnimation) {
+                          return profileScreen(
+                            title: 'โปรไฟล์',
+                            id: widget.id,
+                            username: widget.username,
+                            proflie: widget.proflie,
+                          );
+                        },
+                        transitionsBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            Widget child) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: Offset(-2.0, 0.0),
+                              end: Offset(0.0, 0.0),
+                            ).animate(animation),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(seconds: 0)));
+              },
             ),
           ],
         ),
@@ -161,21 +161,21 @@ class _HomeScreenState extends State<profileScreen> {
     return AppBar(
       elevation: 0,
       backgroundColor: kappbar,
-      title: const Text(
-        'หน้าโปรไฟล์',
+      title: Text(
+        'แจ้งซ่อม',
         style: TextStyle(
           color: kPrimaryColor,
           fontWeight: FontWeight.normal,
         ),
       ),
-      actions: <Widget>[
-        IconButton(
-          icon: SvgPicture.asset(
-            "assets/icons/bell.svg",
-          ),
-          onPressed: () {},
-        ),
-      ],
+      // actions: <Widget>[
+      //   IconButton(
+      //     icon: SvgPicture.asset(
+      //       "assets/icons/bell.svg",
+      //     ),
+      //     onPressed: () {},
+      //   ),
+      // ],
     );
   }
 }

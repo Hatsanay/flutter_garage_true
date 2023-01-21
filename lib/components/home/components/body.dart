@@ -1,7 +1,6 @@
-import 'package:crna_flutter/components/home/components/GarageProvider.dart';
+import 'package:crna_flutter/components/home/components/listProvider.dart';
 import 'package:crna_flutter/components/home/components/garageItemcard.dart';
-import 'package:crna_flutter/components/home/components/machanicPage.dart';
-import 'package:crna_flutter/components/home/components/garagelistPage.dart';
+import 'package:crna_flutter/components/home/components/machanicItemcard.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +9,6 @@ import 'dart:convert';
 class homeBody extends StatefulWidget {
   final String username;
   final String id;
-
   final String proflie;
 
   homeBody(
@@ -160,7 +158,12 @@ class _homeBodyState extends State<homeBody> {
                                       itemCount: snapshot.data?.length,
                                       itemBuilder: (context, index) {
                                         return MenuItemCard(
-                                            garage: snapshot.data![index]);
+                                          garage: snapshot.data![index],
+                                          id: widget.id,
+                                          proflie: widget.proflie,
+                                          title: '',
+                                          username: widget.username,
+                                        );
                                       },
                                     );
                                   } else if (snapshot.hasError) {
@@ -172,7 +175,27 @@ class _homeBodyState extends State<homeBody> {
                                   }
                                 },
                               ),
-                              machanicpage(),
+                              FutureBuilder<List<Map<String, dynamic>>>(
+                                future: machanicProvider.fetchData(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return ListView.builder(
+                                      itemCount: snapshot.data?.length,
+                                      itemBuilder: (context, index) {
+                                        return machanicItemCard(
+                                            machanic: snapshot.data![index]);
+                                      },
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                        child: Text("${snapshot.error}"));
+                                  } else {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                },
+                              ),
+                              // machanicpage(),
 // OrtherPage(),
                             ],
                           ),

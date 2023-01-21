@@ -1,24 +1,13 @@
-import 'package:crna_flutter/components/garagerepair/conponents/body.dart';
-import 'package:crna_flutter/components/garagerepair/repair_screen.dart';
 import 'package:crna_flutter/components/home/components/detaiPage.dart';
+import 'package:crna_flutter/components/home/components/machanicdetialpage.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MenuItemCard extends StatelessWidget {
-  final Map<String, dynamic> garage;
-  final String username;
+class machanicItemCard extends StatelessWidget {
+  final Map<String, dynamic> machanic;
 
-  final String id;
-
-  final String proflie;
-
-  MenuItemCard(
-      {required this.garage,
-      required String title,
-      required this.username,
-      required this.proflie,
-      required this.id});
+  machanicItemCard({required this.machanic});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +23,8 @@ class MenuItemCard extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => DetailPage(
-                                garage: garage,
+                          builder: (context) => machanicDetailPage(
+                                machanic: machanic,
                               )));
                 },
                 child: Row(
@@ -45,7 +34,7 @@ class MenuItemCard extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          garage['garageprofile'],
+                          machanic['mechanicprofile'],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -60,14 +49,14 @@ class MenuItemCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            garage['garagename'],
+                            machanic['mechanicfullname'],
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            garage['address'],
+                            machanic['address'],
                             style: TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey[500],
@@ -88,18 +77,7 @@ class MenuItemCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => repairscreen(
-                                garage: garage,
-                                id: id,
-                                proflie: proflie,
-                                username: username,
-                                title: '',
-                              )));
-                },
+                onPressed: () {},
                 icon: Icon(
                   CupertinoIcons.wrench_fill,
                   color: kPrimaryColor,
