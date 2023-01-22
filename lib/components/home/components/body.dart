@@ -50,8 +50,8 @@ class _homeBodyState extends State<homeBody> {
                   width: width,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assetsimages/cuspro/test1.png"),
-                          // image: NetworkImage(widget.proflie),
+                          // image: AssetImage("assetsimages/cuspro/test1.png"),
+                          image: NetworkImage(widget.proflie),
                           fit: BoxFit.cover)),
                   child: Container(
                     decoration: BoxDecoration(

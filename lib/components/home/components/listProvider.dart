@@ -26,3 +26,16 @@ class machanicProvider {
     }
   }
 }
+
+class repairProvider {
+  static Future<List<Map<String, dynamic>>> fetchData() async {
+    var url = 'http://192.168.1.101/flutter_login/getrepair.php';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((d) => Map<String, dynamic>.from(d)).toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+}

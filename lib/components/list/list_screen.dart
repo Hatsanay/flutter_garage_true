@@ -1,4 +1,5 @@
 import 'package:crna_flutter/components/home/home_screen.dart';
+import 'package:crna_flutter/components/list/components/listbody.dart';
 import 'package:crna_flutter/components/map_screen/components/googlemap.dart';
 import 'package:crna_flutter/components/map_screen/map_screen.dart';
 import 'package:crna_flutter/components/profile/profile_screen.dart';
@@ -34,7 +35,11 @@ class _HomeScreenState extends State<listScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      // body: MapSample(),
+      body: listBody(
+        id: widget.id,
+        proflie: widget.proflie,
+        username: widget.username,
+      ),
       //backgroundColor: kappbar,
       bottomNavigationBar: Container(
         height: 80,

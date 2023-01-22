@@ -1,8 +1,22 @@
+import 'package:crna_flutter/components/garagerepair/repair_screen.dart';
+import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
   final Map<String, dynamic> garage;
-  DetailPage({Key? key, required this.garage}) : super(key: key);
+  final String username;
+
+  final String id;
+
+  final String proflie;
+  DetailPage(
+      {Key? key,
+      required this.garage,
+      required String title,
+      required this.username,
+      required this.proflie,
+      required this.id})
+      : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -103,6 +117,48 @@ class _DetailPageState extends State<DetailPage> {
                     SizedBox(
                       height: 40,
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (context,
+                                    Animation<double> animation,
+                                    Animation<double> secondaryAnimation) {
+                                  return repairscreen(
+                                    id: widget.id, proflie: widget.proflie,
+                                    title: '',
+                                    username: widget.username,
+                                    garage: widget.garage,
+                                    // title: 'หน้าล็อกอิน',
+                                  );
+                                },
+                                transitionsBuilder: (BuildContext context,
+                                    Animation<double> animation,
+                                    Animation<double> secondaryAnimation,
+                                    Widget child) {
+                                  return SlideTransition(
+                                    position: Tween<Offset>(
+                                      begin: Offset(-2.0, 0.0),
+                                      end: Offset(0.0, 0.0),
+                                    ).animate(animation),
+                                    child: child,
+                                  );
+                                },
+                                transitionDuration: Duration(seconds: 0)));
+                      },
+                      child: Text(
+                        "แจ้งซ่อม",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: UserregisButtonStyle,
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -190,4 +246,14 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
+
+  final ButtonStyle UserregisButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.black,
+    primary: kButtonloginColor,
+    minimumSize: Size(94, 55),
+    padding: EdgeInsets.symmetric(horizontal: 120),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+    ),
+  );
 }

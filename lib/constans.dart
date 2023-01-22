@@ -12,4 +12,5 @@ const kTextColor = Color(0xFF3C4046);
 const kBackgoundColor = Color.fromARGB(255, 204, 201, 216);
 const kNavigationBar = Color.fromARGB(33, 177, 182, 190);
 const ktextfieleregis = Color.fromARGB(255, 255, 255, 255);
+const kgarage = Color.fromARGB(255, 151, 149, 147);
 const double KDefoultPadding = 20.0;

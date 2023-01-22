@@ -35,7 +35,7 @@ class _HomeScreenState extends State<pinScreen> {
     return Scaffold(
       appBar: buildAppBar(),
       body: MapSample(),
-      //backgroundColor: kappbar,
+      backgroundColor: Colors.white,
       bottomNavigationBar: Container(
         height: 80,
         decoration: BoxDecoration(

@@ -5,7 +5,7 @@ import 'package:crna_flutter/constans.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MenuItemCard extends StatelessWidget {
+class itemrepair extends StatelessWidget {
   final Map<String, dynamic> garage;
   final String username;
 
@@ -13,7 +13,7 @@ class MenuItemCard extends StatelessWidget {
 
   final String proflie;
 
-  MenuItemCard(
+  itemrepair(
       {required this.garage,
       required String title,
       required this.username,
@@ -31,28 +31,32 @@ class MenuItemCard extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailPage(
-                                garage: garage,
-                                id: id,
-                                proflie: proflie,
-                                title: '',
-                                username: username,
-                              )));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => DetailPage(
+                  //               garage: garage,
+                  //               id: id,
+                  //               proflie: proflie,
+                  //               title: '',
+                  //               username: username,
+                  //             )));
                 },
                 child: Row(
                   children: <Widget>[
                     AspectRatio(
                       aspectRatio: 1 / 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          garage['garageprofile'],
-                          fit: BoxFit.cover,
-                        ),
+                      child: Icon(
+                        Icons.circle,
+                        color: kPrimaryColor,
                       ),
+                      // child: ClipRRect(
+                      //   borderRadius: BorderRadius.circular(60),
+                      //   child: Image.network(
+                      //     garage['garageprofile'],
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // ),
                     ),
                     SizedBox(
                       width: 20,
@@ -78,38 +82,31 @@ class MenuItemCard extends StatelessWidget {
                                 fontWeight: FontWeight.w300),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 2,
                           ),
-                          // Text(
-                          //   "2" + "ก.ม. ",
-                          //   style: TextStyle(
-                          //       fontWeight: FontWeight.bold, fontSize: 18),
-                          // )
+                          Text(
+                            garage['repairreqdatetime'],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color: Colors.green),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            garage['repairreqstatus'],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.green),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => repairscreen(
-                                garage: garage,
-                                id: id,
-                                proflie: proflie,
-                                username: username,
-                                title: '',
-                              )));
-                },
-                icon: Icon(
-                  CupertinoIcons.wrench_fill,
-                  color: kPrimaryColor,
-                  size: 25,
-                ),
-              )
             ],
           ),
         ),
