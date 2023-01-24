@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:crna_flutter/components/garagerepair/repair_screen.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 
 class DetailPage extends StatefulWidget {
   final Map<String, dynamic> garage;
@@ -24,6 +29,57 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   bool _like = false;
+
+  late double lat1, lng1, lat2, lng2, distance;
+  late String distanceString;
+  late CameraPosition position;
+
+  @override
+  void initState() {
+    super.initState();
+    // garage = widget.garage;
+    findlatlng1();
+  }
+
+  Future<Null> findlatlng1() async {
+    LocationData? locationData = await findLocationData();
+    setState(() {
+      lat1 = locationData!.latitude!;
+      lng1 = locationData.longitude!;
+      lat2 = double.parse(widget.garage['garagelattitude']);
+      lng2 = double.parse(widget.garage['garagelonggitude']);
+      print('lat1 =  $lat1, lng1 = $lng1, lat2 = $lat2, lng2 = $lng2');
+      distance = calculateDistance(lat1, lng1, lat2, lng2);
+
+      var myformat = NumberFormat('#0.0#', 'en_US');
+      distanceString = myformat.format(distance);
+
+      print('distance = $distance');
+    });
+  }
+
+  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+    double distance = 0;
+
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lng2 - lng1) * p)) / 2;
+    distance = 12742 * asin(sqrt(a));
+
+    return distance;
+  }
+
+  Future<LocationData?> findLocationData() async {
+    Location location = Location();
+    try {
+      return await location.getLocation();
+    } catch (e) {
+      // print('Could not get location: $e');
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +163,19 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     Text(
                       widget.garage['address'],
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 0.5,
+                          wordSpacing: 1.5),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      // distance == null ? ' ' : '$distanceString ก.ม.',
+                      '$distanceString ก.ม.',
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -251,7 +320,7 @@ class _DetailPageState extends State<DetailPage> {
     onPrimary: Colors.black,
     primary: kButtonloginColor,
     minimumSize: Size(94, 55),
-    padding: EdgeInsets.symmetric(horizontal: 120),
+    padding: EdgeInsets.symmetric(horizontal: 125),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(15.0)),
     ),

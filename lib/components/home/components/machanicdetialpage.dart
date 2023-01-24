@@ -1,8 +1,22 @@
+import 'package:crna_flutter/components/machanicrepair.dart/machainc_screen.dart';
+import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
 
 class machanicDetailPage extends StatefulWidget {
   final Map<String, dynamic> machanic;
-  machanicDetailPage({Key? key, required this.machanic}) : super(key: key);
+  final String username;
+
+  final String id;
+
+  final String proflie;
+  machanicDetailPage(
+      {Key? key,
+      required this.machanic,
+      required String title,
+      required this.username,
+      required this.proflie,
+      required this.id})
+      : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -103,6 +117,45 @@ class _DetailPageState extends State<machanicDetailPage> {
                     SizedBox(
                       height: 40,
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (context,
+                                    Animation<double> animation,
+                                    Animation<double> secondaryAnimation) {
+                                  return macrepairscreen(
+                                    id: widget.id, proflie: widget.proflie,
+                                    title: '',
+                                    username: widget.username,
+                                    machanic: widget.machanic,
+                                    // title: 'หน้าล็อกอิน',
+                                  );
+                                },
+                                transitionsBuilder: (BuildContext context,
+                                    Animation<double> animation,
+                                    Animation<double> secondaryAnimation,
+                                    Widget child) {
+                                  return SlideTransition(
+                                    position: Tween<Offset>(
+                                      begin: Offset(-2.0, 0.0),
+                                      end: Offset(0.0, 0.0),
+                                    ).animate(animation),
+                                    child: child,
+                                  );
+                                },
+                                transitionDuration: Duration(seconds: 0)));
+                      },
+                      child: Text(
+                        "แจ้งซ่อม",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: UserregisButtonStyle,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -190,4 +243,14 @@ class _DetailPageState extends State<machanicDetailPage> {
       ),
     );
   }
+
+  final ButtonStyle UserregisButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.black,
+    primary: kButtonloginColor,
+    minimumSize: Size(94, 55),
+    padding: EdgeInsets.symmetric(horizontal: 125),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+    ),
+  );
 }

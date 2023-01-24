@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/material.dart';
@@ -25,46 +26,51 @@ class _profilebodyState extends State<profilebody> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(50),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: kPrimaryColor,
-              border: Border.all(
-                  color: kBackgoundColor, // Set border color
-                  width: 3.0), // Set border width
-              borderRadius: BorderRadius.all(
-                  Radius.circular(25.0)), // Set rounded corner radius
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 10,
-                    color: Color.fromARGB(255, 226, 118, 118),
-                    offset: Offset(1, 3))
-              ] // Make rounded corner of border
-              ),
-          child: Column(
-            children: <Widget>[
-              CircleAvatar(
-                backgroundColor: Colors.black,
-                radius: 60,
-                child: CircleAvatar(
-                  radius: 110,
-                  backgroundImage: NetworkImage(widget.proflie),
-                  // backgroundImage: AssetImage('assets/icons/'),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(50),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: kPrimaryColor,
+                border: Border.all(
+                    color: kBackgoundColor, // Set border color
+                    width: 3.0), // Set border width
+                borderRadius: BorderRadius.all(
+                    Radius.circular(25.0)), // Set rounded corner radius
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 10,
+                      color: Color.fromARGB(255, 226, 118, 118),
+                      offset: Offset(1, 3))
+                ] // Make rounded corner of border
                 ),
-              ),
-              Text(
-                widget.username,
-                style: TextStyle(color: Colors.white, fontSize: 30),
-              ),
-            ],
+            child: Column(
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: Colors.black,
+                  radius: 60,
+                  child: CircleAvatar(
+                    radius: 110,
+                    backgroundImage: NetworkImage(widget.proflie),
+                    // backgroundImage: AssetImage('assets/icons/'),
+                  ),
+                ),
+                Text(
+                  widget.username,
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                ),
+              ],
+            ),
           ),
-        ),
-        Text("data")
-      ],
+          Text(
+            "ยังไม่พร้อมใช้งาน",
+            style: TextStyle(fontSize: 15),
+          ),
+        ],
+      ),
     );
   }
 }

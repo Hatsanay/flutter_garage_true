@@ -1,5 +1,6 @@
 import 'package:crna_flutter/components/home/components/detaiPage.dart';
 import 'package:crna_flutter/components/home/components/machanicdetialpage.dart';
+import 'package:crna_flutter/components/machanicrepair.dart/machainc_screen.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,18 @@ import 'package:flutter/material.dart';
 class machanicItemCard extends StatelessWidget {
   final Map<String, dynamic> machanic;
 
-  machanicItemCard({required this.machanic});
+  final String username;
+
+  final String id;
+
+  final String proflie;
+
+  machanicItemCard(
+      {required this.machanic,
+      required String title,
+      required this.username,
+      required this.proflie,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +37,10 @@ class machanicItemCard extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => machanicDetailPage(
                                 machanic: machanic,
+                                id: id,
+                                proflie: proflie,
+                                title: '',
+                                username: username,
                               )));
                 },
                 child: Row(
@@ -77,7 +93,20 @@ class machanicItemCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => macrepairscreen(
+                        machanic: machanic,
+                        id: id,
+                        proflie: proflie,
+                        username: username,
+                        title: '',
+                      ),
+                    ),
+                  );
+                },
                 icon: Icon(
                   CupertinoIcons.wrench_fill,
                   color: kPrimaryColor,

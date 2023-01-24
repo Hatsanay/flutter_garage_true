@@ -183,7 +183,12 @@ class _homeBodyState extends State<homeBody> {
                                       itemCount: snapshot.data?.length,
                                       itemBuilder: (context, index) {
                                         return machanicItemCard(
-                                            machanic: snapshot.data![index]);
+                                          machanic: snapshot.data![index],
+                                          id: widget.id,
+                                          proflie: widget.proflie,
+                                          title: '',
+                                          username: widget.username,
+                                        );
                                       },
                                     );
                                   } else if (snapshot.hasError) {

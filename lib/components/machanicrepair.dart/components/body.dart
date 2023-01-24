@@ -2,45 +2,41 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:crna_flutter/MyStyle.dart';
 import 'package:crna_flutter/components/list/list_screen.dart';
 import 'package:crna_flutter/constans.dart';
-import 'package:crna_flutter/main.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:never_behind_keyboard/never_behind_keyboard.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
-class repairBody extends StatefulWidget {
-  final Map<String, dynamic> garage;
+class macrepairBody extends StatefulWidget {
+  final Map<String, dynamic> machanic;
   final String username;
   final String id;
   final String proflie;
-  repairBody(
+  macrepairBody(
       {Key? key,
       required this.username,
       required this.id,
       required this.proflie,
-      required this.garage})
+      required this.machanic})
       : super(key: key);
 
   @override
-  State<repairBody> createState() => _repairBodyState();
+  State<macrepairBody> createState() => _macrepairBodyState();
 }
 
-class _repairBodyState extends State<repairBody> {
+class _macrepairBodyState extends State<macrepairBody> {
   late GoogleMapController _mapController;
-
   final TextEditingController repairreqfullname = TextEditingController();
   final TextEditingController repairreqtel = TextEditingController();
   final TextEditingController repairreqcardetial = TextEditingController();
   final TextEditingController repairreqspecial = TextEditingController();
   final TextEditingController repairreqproblem = TextEditingController();
 
-  // late Map<String, dynamic> garage;
   late double lat1, lng1, lat2, lng2, distance;
   late String distanceString;
   late CameraPosition position;
@@ -59,8 +55,8 @@ class _repairBodyState extends State<repairBody> {
     setState(() {
       lat1 = locationData!.latitude!;
       lng1 = locationData.longitude!;
-      lat2 = double.parse(widget.garage['garagelattitude']);
-      lng2 = double.parse(widget.garage['garagelonggitude']);
+      // lat2 = double.parse(widget.garage['garagelattitude']);
+      // lng2 = double.parse(widget.garage['garagelonggitude']);
 
       // latti1 = lat1 as String;
       // lngji1 = lng1 as String;
@@ -97,9 +93,9 @@ class _repairBodyState extends State<repairBody> {
     }
   }
 
-  Future postrepair() async {
+  Future postrepairmac() async {
     var url = Uri.http(
-        "192.168.1.101", '/flutter_login/postrepair.php', {'q': '{http}'});
+        "192.168.1.101", '/flutter_login/postrepairmac.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       "repairreqfullname": repairreqfullname.text.toString(),
       "repairreqtel": repairreqtel.text.toString(),
@@ -113,8 +109,8 @@ class _repairBodyState extends State<repairBody> {
       // "repairreqlattitude": latti1.toString(),
       // "repairreqlonggitude": lngji1.toString(),
 
-      "repairreqgarageid": widget.garage['garageid'].toString(),
-      "repairname": widget.garage['garagename'].toString(),
+      "repairreqmacid": widget.machanic['garageid'].toString(),
+      "repairname": widget.machanic['mechanicfullname'].toString(),
       "repairreqmemid": widget.id.toString(),
 
       // "password": pass.text.toString(),
@@ -182,7 +178,7 @@ class _repairBodyState extends State<repairBody> {
                             borderRadius:
                                 new BorderRadius.all(new Radius.circular(5.0))),
                         child: Text(
-                          widget.garage['garagename'],
+                          widget.machanic['mechanicfullname'],
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       )
@@ -208,7 +204,7 @@ class _repairBodyState extends State<repairBody> {
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(5.0))),
                 child: Text(
-                  widget.garage['address'],
+                  widget.machanic['address'],
                   style: TextStyle(fontSize: 20, color: kPrimaryColor),
                 ),
               ),
@@ -230,58 +226,10 @@ class _repairBodyState extends State<repairBody> {
                             borderRadius:
                                 new BorderRadius.all(new Radius.circular(5.0))),
                         child: Text(
-                          widget.garage['garagetel'],
+                          widget.machanic['mechanictel'],
                           style: TextStyle(fontSize: 20, color: kPrimaryColor),
                         ),
                       )
-                    ],
-                  ),
-                ],
-              ),
-              Text(
-                " ",
-                style: TextStyle(fontSize: 3, color: kPrimaryColor), //ว่าง
-              ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "ระยะห่าง: ",
-                        style: TextStyle(fontSize: 20, color: kPrimaryColor),
-                      ),
-                      Container(
-                        decoration: new BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                new BorderRadius.all(new Radius.circular(5.0))),
-                        child: Text(
-                          // distance == null ? ' ' : '$distanceString ก.ม.',
-                          '$distanceString ก.ม.',
-                          style: TextStyle(fontSize: 20, color: kPrimaryColor),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Text(
-                " ",
-                style: TextStyle(fontSize: 5, color: kPrimaryColor), //ว่าง
-              ),
-              showMap(),
-              Text(
-                " ",
-                style: TextStyle(fontSize: 15, color: kPrimaryColor), //ว่าง
-              ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "กรอกข้อมูลเบื้องต้น",
-                        style: TextStyle(fontSize: 18, color: kPrimaryColor),
-                      ),
                     ],
                   ),
                 ],
@@ -302,7 +250,6 @@ class _repairBodyState extends State<repairBody> {
                         return null;
                       },
                       controller: repairreqfullname,
-                      // obscureText: true,
                       scrollPadding: EdgeInsets.all(10),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -322,11 +269,11 @@ class _repairBodyState extends State<repairBody> {
                     TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'โปรดกรอกรหัสผ่าน(ชื่อ-นามสกุล)!';
+                          return 'โปรดกรอกรหัสผ่าน(เบอร์โทร)!';
                         }
                         return null;
                       },
-                      controller: repairreqtel, //
+                      controller: repairreqtel,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "เบอร์โทร",
@@ -343,7 +290,13 @@ class _repairBodyState extends State<repairBody> {
                           TextStyle(fontSize: 9, color: kPrimaryColor), //ว่าง
                     ),
                     TextFormField(
-                      controller: repairreqcardetial, //
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'โปรดกรอกรหัสผ่าน(รายละเอียดรถ ยี่ห้อ, รุ่น, สี)!';
+                        }
+                        return null;
+                      },
+                      controller: repairreqcardetial,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "รายละเอียดรถ ยี่ห้อ, รุ่น, สี",
@@ -360,7 +313,13 @@ class _repairBodyState extends State<repairBody> {
                           TextStyle(fontSize: 9, color: kPrimaryColor), //ว่าง
                     ),
                     TextFormField(
-                      controller: repairreqproblem, //
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'โปรดกรอกรหัสผ่าน(ปัญหาเบื้องต้น)!';
+                        }
+                        return null;
+                      },
+                      controller: repairreqproblem,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "ปัญหาเบื้องต้น",
@@ -377,7 +336,7 @@ class _repairBodyState extends State<repairBody> {
                           TextStyle(fontSize: 9, color: kPrimaryColor), //ว่าง
                     ),
                     TextFormField(
-                      controller: repairreqspecial, //
+                      controller: repairreqspecial,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "สถานที่ไกล้เคียง",
@@ -419,7 +378,7 @@ class _repairBodyState extends State<repairBody> {
                     // ),
                     ElevatedButton(
                       onPressed: () {
-                        postrepair();
+                        postrepairmac();
                       },
                       child: Text(
                         "แจ้งซ่อม",
@@ -437,57 +396,6 @@ class _repairBodyState extends State<repairBody> {
           ),
         ),
       ),
-    );
-  }
-
-  Container showMap() {
-    if (lat1 != null) {
-      LatLng latLng1 = LatLng(lat1, lng1);
-      position = CameraPosition(
-        target: latLng1,
-        zoom: 12.0,
-      );
-    }
-
-    Marker userMarker() {
-      return Marker(
-        markerId: MarkerId(
-          'userMarker',
-        ),
-        position: LatLng(lat1, lng1),
-        icon: BitmapDescriptor.defaultMarkerWithHue(240.0),
-        infoWindow: InfoWindow(title: 'คุณอยู่ที่นี่'),
-      );
-    }
-
-    Marker garagerMarker() {
-      return Marker(
-        markerId: MarkerId(
-          'garagerMarker',
-        ),
-        position: LatLng(lat2, lng2),
-        icon: BitmapDescriptor.defaultMarkerWithHue(0.0),
-        infoWindow: InfoWindow(
-          title: widget.garage['garagename'],
-        ),
-      );
-    }
-
-    Set<Marker> mySet() {
-      return <Marker>[userMarker(), garagerMarker()].toSet();
-    }
-
-    return Container(
-      // color: kPrimaryColor,
-      height: 250,
-      child: lat1 == null
-          ? MyStyle().showProgress()
-          : GoogleMap(
-              initialCameraPosition: position,
-              mapType: MapType.normal,
-              onMapCreated: (controller) {},
-              markers: mySet(),
-            ),
     );
   }
 

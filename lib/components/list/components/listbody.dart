@@ -34,7 +34,7 @@ class _homeBodyState extends State<listBody> {
           child: Container(
         height: height * 0.8,
         child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: repairProvider.fetchData(),
+          future: repairProvider.fetchData(widget.id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -50,7 +50,7 @@ class _homeBodyState extends State<listBody> {
                 },
               );
             } else if (snapshot.hasError) {
-              return Center(child: Text("${snapshot.error}"));
+              return Center(child: Text(""));
             } else {
               return Center(child: CircularProgressIndicator());
             }

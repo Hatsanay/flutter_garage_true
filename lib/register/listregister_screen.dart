@@ -24,13 +24,17 @@ class _regisbodyState extends State<regisbody> {
   final TextEditingController conpass = TextEditingController();
   final TextEditingController tel = TextEditingController();
   final TextEditingController fullname = TextEditingController();
+  final TextEditingController email = TextEditingController();
 
   Future register() async {
-    var url =
-        Uri.http("192.168.1.101", '/crna-api1/register.php', {'q': '{http}'});
+    var url = Uri.http(
+        "192.168.1.101", '/flutter_login/register.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       "username": user.text.toString(),
       "password": pass.text.toString(),
+      "tel": tel.text.toString(),
+      "fullname": fullname.text.toString(),
+      "email": email.text.toString(),
       // "fullname": fullname.text.toString(),
       // "tel": tel.text.toString(),
     });
@@ -121,19 +125,28 @@ class _regisbodyState extends State<regisbody> {
 ///////หัวช่องกรอก////////
 ///////////////////////
   Widget content() {
-    return Center(
-      child: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            showAppName(),
-            usernameText(),
-            passwordText(),
-            confirmpasswordText(),
-            fullnameText(),
-            telText(),
-            // dropbox(),
-          ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 80),
+        child: Center(
+          child: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Column(
+                  children: [
+                    showAppName(),
+                    usernameText(),
+                    passwordText(),
+                    confirmpasswordText(),
+                    fullnameText(),
+                    telText(),
+                    emailText(),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -227,7 +240,7 @@ class _regisbodyState extends State<regisbody> {
           }
           return null;
         },
-        // controller: fullname,
+        controller: fullname,
         // obscureText: !_isVisible,
         decoration: InputDecoration(
           // suffixIcon: visible(),
@@ -253,7 +266,7 @@ class _regisbodyState extends State<regisbody> {
           }
           return null;
         },
-        // controller: tel,
+        controller: tel,
         // obscureText: !_isVisible,
         decoration: InputDecoration(
           // suffixIcon: visible(),
@@ -263,6 +276,32 @@ class _regisbodyState extends State<regisbody> {
             color: kPrimaryColor,
           ),
           labelText: 'เบอร์โทร',
+          labelStyle: TextStyle(color: kPrimaryColor),
+        ),
+      ),
+    );
+  }
+
+  Widget emailText() {
+    return Container(
+      width: 320.0,
+      child: new TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'โปรดกรอกรหัสผ่าน(Password)!';
+          }
+          return null;
+        },
+        controller: email,
+        // obscureText: !_isVisible,
+        decoration: InputDecoration(
+          // suffixIcon: visible(),
+          icon: Icon(
+            Icons.email,
+            size: 36.0,
+            color: kPrimaryColor,
+          ),
+          labelText: 'อีเมล์',
           labelStyle: TextStyle(color: kPrimaryColor),
         ),
       ),

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:crna_flutter/components/garagerepair/conponents/body.dart';
 import 'package:crna_flutter/components/garagerepair/repair_screen.dart';
 import 'package:crna_flutter/components/home/components/detaiPage.dart';
 import 'package:crna_flutter/constans.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class itemrepair extends StatelessWidget {
   final Map<String, dynamic> garage;
@@ -68,16 +71,26 @@ class itemrepair extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            garage['garagename'],
+                            garage['repairname'],
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            garage['address'],
+                            "ชื่อผู้แจ้ง" + garage['repairreqfullname'],
                             style: TextStyle(
-                                fontSize: 10,
+                                fontSize: 12,
+                                color: Colors.grey[500],
+                                fontWeight: FontWeight.w300),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "ปัญหา" + garage['repairreqproblem'],
+                            style: TextStyle(
+                                fontSize: 12,
                                 color: Colors.grey[500],
                                 fontWeight: FontWeight.w300),
                           ),
@@ -114,3 +127,16 @@ class itemrepair extends StatelessWidget {
     );
   }
 }
+
+// class repairProvider {
+//   static Future<List<Map<String, dynamic>>> fetchData() async {
+//     var url = 'http://192.168.1.101/flutter_login/getlistgarage.php';
+//     var response = await http.get(Uri.parse(url));
+//     if (response.statusCode == 200) {
+//       final List<dynamic> data = jsonDecode(response.body);
+//       return data.map((d) => Map<String, dynamic>.from(d)).toList();
+//     } else {
+//       throw Exception('Failed to load data');
+//     }
+//   }
+// }
