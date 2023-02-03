@@ -1,44 +1,77 @@
-import 'package:crna_flutter/components/home/home_screen.dart';
-import 'package:crna_flutter/components/list/components/listbody.dart';
-import 'package:crna_flutter/components/map_screen/components/googlemap.dart';
-import 'package:crna_flutter/components/map_screen/map_screen.dart';
-import 'package:crna_flutter/components/profile/profile_screen.dart';
-import 'package:crna_flutter/constans.dart';
+import 'package:flutter_garage_true/components/home/components/body.dart';
+import 'package:flutter_garage_true/components/home/home_screen.dart';
+import 'package:flutter_garage_true/components/list/components/body.dart';
+import 'package:flutter_garage_true/components/notification/components/body.dart';
+import 'package:flutter_garage_true/components/notification/home_screen.dart';
+import 'package:flutter_garage_true/constans.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../home/components/body.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:math';
+import 'dart:convert';
+import 'dart:async';
+import 'package:intl/intl.dart';
 
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class listScreen extends StatefulWidget {
   final String username;
-
   final String id;
-
   final String proflie;
 
-  const listScreen(
-      {Key? key,
-      required String title,
-      required this.username,
-      required this.proflie,
-      required this.id})
-      : super(key: key);
+  final String garageid;
+  final String garagename;
+  final String garagetel;
+  final String garagelattitude;
+  final String garagelonggitude;
+  final String garageprofile;
+  final String garageonoff;
+  final String ownerid;
+  final String garagedeegree;
 
+  listScreen({
+    Key? key,
+    required String title,
+    required this.username,
+    required this.proflie,
+    required this.id,
+    required this.garageid,
+    required this.garagename,
+    required this.garagetel,
+    required this.garagelattitude,
+    required this.garagelonggitude,
+    required this.garageprofile,
+    required this.garageonoff,
+    required this.ownerid,
+    required this.garagedeegree,
+  }) : super(key: key);
+  // final String username;
+
+  // HomeScreen({required this.username});
   @override
-  State<listScreen> createState() => _HomeScreenState();
+  State<listScreen> createState() => _listScreenState();
 }
 
-class _HomeScreenState extends State<listScreen> {
+class _listScreenState extends State<listScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
       body: listBody(
+        username: widget.username,
         id: widget.id,
         proflie: widget.proflie,
-        username: widget.username,
+        garageid: widget.garageid,
+        garagename: widget.garagename,
+        garagetel: widget.garagetel,
+        garagelattitude: widget.garagelattitude,
+        garagelonggitude: widget.garagelonggitude,
+        garageprofile: widget.garageprofile,
+        garageonoff: widget.garageonoff,
+        ownerid: widget.ownerid,
+        garagedeegree: widget.garagedeegree,
       ),
       //backgroundColor: kappbar,
       bottomNavigationBar: Container(
@@ -62,14 +95,22 @@ class _HomeScreenState extends State<listScreen> {
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                        pageBuilder: (BuildContext context,
-                            Animation<double> animation,
+                        pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
                           return HomeScreen(
-                            title: 'หน้าแรก',
                             username: widget.username,
                             id: widget.id,
                             proflie: widget.proflie,
+                            garageid: widget.garageid,
+                            garagename: widget.garagename,
+                            garagetel: widget.garagetel,
+                            garagelattitude: widget.garagelattitude,
+                            garagelonggitude: widget.garagelonggitude,
+                            garageprofile: widget.garageprofile,
+                            garageonoff: widget.garageonoff,
+                            ownerid: widget.ownerid,
+                            garagedeegree: widget.garagedeegree,
+                            title: '',
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -88,19 +129,30 @@ class _HomeScreenState extends State<listScreen> {
               },
             ),
             IconButton(
-              icon: SvgPicture.asset("assets/icons/pin.svg"),
+              icon: SvgPicture.asset(
+                "assets/icons/bell.svg",
+                // color: kPrimaryColor,
+              ),
               onPressed: () {
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                        pageBuilder: (BuildContext context,
-                            Animation<double> animation,
+                        pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return pinScreen(
-                            title: 'แผนที่',
-                            id: widget.id,
+                          return NotiScreen(
                             username: widget.username,
+                            id: widget.id,
                             proflie: widget.proflie,
+                            garageid: widget.garageid,
+                            garagename: widget.garagename,
+                            garagetel: widget.garagetel,
+                            garagelattitude: widget.garagelattitude,
+                            garagelonggitude: widget.garagelonggitude,
+                            garageprofile: widget.garageprofile,
+                            garageonoff: widget.garageonoff,
+                            ownerid: widget.ownerid,
+                            garagedeegree: widget.garagedeegree,
+                            title: '',
                           );
                         },
                         transitionsBuilder: (BuildContext context,
@@ -119,8 +171,52 @@ class _HomeScreenState extends State<listScreen> {
               },
             ),
             IconButton(
-              icon: SvgPicture.asset("assets/icons/fileso.svg"),
-              onPressed: () {},
+              icon: SvgPicture.asset(
+                "assets/icons/files.svg",
+                color: kPrimaryColor,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, Animation<double> animation,
+                            Animation<double> secondaryAnimation) {
+                          return listScreen(
+                            id: widget.id,
+                            username: widget.username,
+                            proflie: widget.proflie,
+                            garageid: widget.garageid,
+                            garagename: widget.garagename,
+                            garagetel: widget.garagetel,
+                            garagelattitude: widget.garagelattitude,
+                            garagelonggitude: widget.garagelonggitude,
+                            garageprofile: widget.garageprofile,
+                            garageonoff: widget.garageonoff,
+                            ownerid: widget.ownerid,
+                            garagedeegree: widget.garagedeegree,
+                            title: '',
+                          );
+                          // listScreen(
+                          //   title: 'แผนที่',
+                          //   id: widget.id,
+                          //   username: widget.username,
+                          //   proflie: widget.proflie,
+                          // );
+                        },
+                        transitionsBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            Widget child) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: Offset(-2.0, 0.0),
+                              end: Offset(0.0, 0.0),
+                            ).animate(animation),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(seconds: 0)));
+              },
             ),
             IconButton(
               icon: SvgPicture.asset("assets/icons/user.svg"),
@@ -130,12 +226,26 @@ class _HomeScreenState extends State<listScreen> {
                     PageRouteBuilder(
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return profileScreen(
-                            title: 'โปรไฟล์',
+                          return homeBody(
                             id: widget.id,
                             username: widget.username,
                             proflie: widget.proflie,
+                            garageid: widget.garageid,
+                            garagename: widget.garagename,
+                            garagetel: widget.garagetel,
+                            garagelattitude: widget.garagelattitude,
+                            garagelonggitude: widget.garagelonggitude,
+                            garageprofile: widget.garageprofile,
+                            garageonoff: widget.garageonoff,
+                            ownerid: widget.ownerid,
+                            garagedeegree: widget.garagedeegree,
                           );
+                          // profileScreen(
+                          //   title: 'โปรไฟล์',
+                          //   id: widget.id,
+                          //   username: widget.username,
+                          //   proflie: widget.proflie,
+                          // );
                         },
                         transitionsBuilder: (BuildContext context,
                             Animation<double> animation,
@@ -162,20 +272,20 @@ class _HomeScreenState extends State<listScreen> {
     return AppBar(
       elevation: 0,
       backgroundColor: kappbar,
-      title: const Text(
-        'หน้ารายการ',
+      title: Text(
+        'แจ้งเตือน',
         style: TextStyle(
           color: kPrimaryColor,
           fontWeight: FontWeight.normal,
         ),
       ),
       actions: <Widget>[
-        IconButton(
-          icon: SvgPicture.asset(
-            "assets/icons/bell.svg",
-          ),
-          onPressed: () {},
-        ),
+        // IconButton(
+        //   icon: SvgPicture.asset(
+        //     "assets/icons/bell.svg",
+        //   ),
+        //   onPressed: () {},
+        // ),
       ],
     );
   }

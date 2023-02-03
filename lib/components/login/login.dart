@@ -1,14 +1,14 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode;
 
-import 'package:crna_flutter/components/home/home_screen.dart';
-import 'package:crna_flutter/components/login/api_provider.dart';
-import 'package:crna_flutter/constans.dart';
+import 'package:flutter_garage_true/components/home/home_screen.dart';
+import 'package:flutter_garage_true/components/login/api_provider.dart';
+import 'package:flutter_garage_true/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -31,19 +31,37 @@ class _loginPageState extends State<loginPage> {
     });
     final data = jsonDecode(res.body);
 
-    if (data['level'] == "1") {
+    if (data['level'] == "2") {
       print(data['msg'] +
-          " dan status : " +
-          data['level'] +
-          data['fullname'] +
-          data['id'] +
-          data['proflie']);
+              " dan status : " +
+              data['level'] +
+              data['fullname'] +
+              data['id'] +
+              data['proflie']
+          // data['garagename'] +
+          // data['garagetel'] +
+          // data['garagelattitude'] +
+          // data['garagelonggitude'] +
+          // data['garageprofile'] +
+          // data['garageonoff'] +
+          // data['ownerid'] +
+          // data['garagedeegree']
+          );
       Navigator.of(context).push(MaterialPageRoute(
         builder: (c) => HomeScreen(
           username: data['fullname'],
           id: data['id'],
           proflie: data['proflie'],
           title: 'หน้าแรก',
+          garageid: data['garageid1'],
+          garagename: data['garagename'],
+          garagetel: data['garagetel'],
+          garagelattitude: data['garagelattitude'],
+          garagelonggitude: data['garagelonggitude'],
+          garageprofile: data['garageprofile'],
+          garageonoff: data['garageonoff'],
+          ownerid: data['ownerid'],
+          garagedeegree: data['garagedeegree'],
         ),
       ));
       _ctrlUsername.clear();

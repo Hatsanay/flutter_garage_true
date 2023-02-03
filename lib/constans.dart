@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+const String google_api_key = "AIzaSyDh5u_5MGZbFpzKlgrG2RCOiwaX1bchfZA";
+const double defaultPadding = 16.0;
+
 const kPrimaryColor = Color(0xFFFF5722);
 const kButtonloginColor = Color.fromARGB(255, 240, 98, 55);
 const kButtonregis = Color.fromARGB(255, 235, 219, 212);

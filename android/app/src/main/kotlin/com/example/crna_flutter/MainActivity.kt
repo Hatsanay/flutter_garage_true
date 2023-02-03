@@ -1,4 +1,4 @@
-package com.example.crna_flutter
+package com.example.flutter_garage_true
 
 import io.flutter.embedding.android.FlutterActivity
 

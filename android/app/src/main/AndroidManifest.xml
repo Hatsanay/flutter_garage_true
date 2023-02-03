@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.crna_flutter">
+    package="com.example.flutter_garage_true">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
    <application
-        android:label="crna_flutter"
+        android:label="flutter_garage_true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-    <meta-data 
+ <meta-data 
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyDh5u_5MGZbFpzKlgrG2RCOiwaX1bchfZA"/>
         <activity

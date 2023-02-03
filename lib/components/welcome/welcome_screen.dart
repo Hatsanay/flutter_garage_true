@@ -1,9 +1,7 @@
-import 'package:crna_flutter/components/welcome/components/body.dart';
-import 'package:crna_flutter/constans.dart';
+import 'package:flutter_garage_true/components/welcome/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class WelCome extends StatefulWidget {
   const WelCome({Key? key}) : super(key: key);
