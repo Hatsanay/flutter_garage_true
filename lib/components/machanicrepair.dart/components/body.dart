@@ -95,7 +95,7 @@ class _macrepairBodyState extends State<macrepairBody> {
 
   Future postrepairmac() async {
     var url = Uri.http(
-        "192.168.1.101", '/flutter_login/postrepairmac.php', {'q': '{http}'});
+        "192.168.1.106", '/flutter_login/postrepairmac.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       "repairreqfullname": repairreqfullname.text.toString(),
       "repairreqtel": repairreqtel.text.toString(),

@@ -23,13 +23,72 @@ class homeBody extends StatefulWidget {
 
 class _homeBodyState extends State<homeBody> {
   static Future<List<Map<String, dynamic>>> fetchData() async {
-    var url = 'http://192.168.1.101/flutter_login/getlistcoffee.php';
+    var url = 'http://192.168.1.106/flutter_login/getlistcoffee.php';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       return data.map((d) => Map<String, dynamic>.from(d)).toList();
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+  TextEditingController seh = TextEditingController();
+  @override
+  void initState() {
+    seh = TextEditingController();
+    super.initState();
+  }
+
+  FutureBuilder<List<Map<String, dynamic>>> sehgarage() {
+    if (seh == 0 || seh.text.isEmpty) {
+      return FutureBuilder<List<Map<String, dynamic>>>(
+        future: GarageProvider.fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data?.length,
+              itemBuilder: (context, index) {
+                return MenuItemCard(
+                  garage: snapshot.data![index],
+                  id: widget.id,
+                  proflie: widget.proflie,
+                  title: '',
+                  username: widget.username,
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text("${snapshot.error}"));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      );
+    } else {
+      return FutureBuilder<List<Map<String, dynamic>>>(
+        future: sehgarageProvider.fetchData(seh.toString()),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data?.length,
+              itemBuilder: (context, index) {
+                return MenuItemCard(
+                  garage: snapshot.data![index],
+                  id: widget.id,
+                  proflie: widget.proflie,
+                  title: '',
+                  username: widget.username,
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text("${snapshot.error}"));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      );
     }
   }
 
@@ -128,6 +187,7 @@ class _homeBodyState extends State<homeBody> {
                           padding: const EdgeInsets.only(
                               left: 20, right: 20, bottom: 10),
                           child: TextField(
+                            controller: seh,
                             decoration: InputDecoration(
                                 contentPadding:
                                     EdgeInsets.symmetric(vertical: 3),
@@ -144,62 +204,25 @@ class _homeBodyState extends State<homeBody> {
                                     borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
                                         width: 1.0, color: Colors.grey))),
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                setState(() {
+                                  seh = value as TextEditingController;
+                                });
+                              } else {
+                                setState(() {
+                                  var seh = 0;
+                                });
+                              }
+                            },
                           ),
                         ),
                         Container(
                           height: height * 0.6,
                           child: TabBarView(
-                            children: <Widget>[
-                              FutureBuilder<List<Map<String, dynamic>>>(
-                                future: GarageProvider.fetchData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return ListView.builder(
-                                      itemCount: snapshot.data?.length,
-                                      itemBuilder: (context, index) {
-                                        return MenuItemCard(
-                                          garage: snapshot.data![index],
-                                          id: widget.id,
-                                          proflie: widget.proflie,
-                                          title: '',
-                                          username: widget.username,
-                                        );
-                                      },
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                        child: Text("${snapshot.error}"));
-                                  } else {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  }
-                                },
-                              ),
-                              FutureBuilder<List<Map<String, dynamic>>>(
-                                future: machanicProvider.fetchData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return ListView.builder(
-                                      itemCount: snapshot.data?.length,
-                                      itemBuilder: (context, index) {
-                                        return machanicItemCard(
-                                          machanic: snapshot.data![index],
-                                          id: widget.id,
-                                          proflie: widget.proflie,
-                                          title: '',
-                                          username: widget.username,
-                                        );
-                                      },
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                        child: Text("${snapshot.error}"));
-                                  } else {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  }
-                                },
-                              ),
+                            children: [
+                              sehgarage(),
+                              shegarage(),
                               // machanicpage(),
 // OrtherPage(),
                             ],
@@ -214,6 +237,87 @@ class _homeBodyState extends State<homeBody> {
       ),
     ));
   }
+
+  FutureBuilder<List<Map<String, dynamic>>> shegarage() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: machanicProvider.fetchData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data?.length,
+            itemBuilder: (context, index) {
+              return machanicItemCard(
+                machanic: snapshot.data![index],
+                id: widget.id,
+                proflie: widget.proflie,
+                title: '',
+                username: widget.username,
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Center(child: Text("${snapshot.error}"));
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  // FutureBuilder<List<Map<String, dynamic>>> sehgarage(
+  //     TextEditingController seh) {
+  //   return FutureBuilder<List<Map<String, dynamic>>>(
+  //     future: seh != null
+  //         ? sehgarageProvider.fetchData(seh.toString())
+  //         : GarageProvider.fetchData(),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasData) {
+  //         return ListView.builder(
+  //           itemCount: snapshot.data?.length,
+  //           itemBuilder: (context, index) {
+  //             return MenuItemCard(
+  //               garage: snapshot.data![index],
+  //               id: widget.id,
+  //               proflie: widget.proflie,
+  //               title: '',
+  //               username: widget.username,
+  //             );
+  //           },
+  //         );
+  //       } else if (snapshot.hasError) {
+  //         return Center(child: Text("${snapshot.error}"));
+  //       } else {
+  //         return Center(child: CircularProgressIndicator());
+  //       }
+  //     },
+  //   );
+  // }
+
+  // FutureBuilder<List<Map<String, dynamic>>> sehgarage() {
+  //   return FutureBuilder<List<Map<String, dynamic>>>(
+  //     future: GarageProvider.fetchData(),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasData) {
+  //         return ListView.builder(
+  //           itemCount: snapshot.data?.length,
+  //           itemBuilder: (context, index) {
+  //             return MenuItemCard(
+  //               garage: snapshot.data![index],
+  //               id: widget.id,
+  //               proflie: widget.proflie,
+  //               title: '',
+  //               username: widget.username,
+  //             );
+  //           },
+  //         );
+  //       } else if (snapshot.hasError) {
+  //         return Center(child: Text("${snapshot.error}"));
+  //       } else {
+  //         return Center(child: CircularProgressIndicator());
+  //       }
+  //     },
+  //   );
+  // }
 }
 
 
@@ -224,6 +328,8 @@ class _homeBodyState extends State<homeBody> {
 
 
 
+
+                             
 
 
 
@@ -262,7 +368,7 @@ class _homeBodyState extends State<homeBody> {
 
 // class _homeBodyState extends State<homeBody> {
 //   Future getContactData() async {
-//     var url = 'http://192.168.1.101/flutter_login/getlistgarage.php';
+//     var url = 'http://192.168.1.106/flutter_login/getlistgarage.php';
 //     var response = await http.get(Uri.parse(url));
 //     return jsonDecode(response.body);
 //   }

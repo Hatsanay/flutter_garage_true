@@ -8,6 +8,8 @@ import 'package:connectivity/connectivity.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 
 class MapSample extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class MapSample extends StatefulWidget {
 }
 
 class _MapSampleState extends State<MapSample> {
+  late double lat1, lng1;
   late GoogleMapController mapController;
   final LatLng _center = const LatLng(8.0878723, -98.9061776);
   Set<Marker> _markers = Set();
@@ -27,10 +30,29 @@ class _MapSampleState extends State<MapSample> {
   void initState() {
     super.initState();
     _getMarkersFromDB();
+    findlatlng1();
+  }
+
+  Future<Null> findlatlng1() async {
+    LocationData? locationData = await findLocationData();
+    setState(() {
+      lat1 = locationData!.latitude!;
+      lng1 = locationData.longitude!;
+    });
+  }
+
+  Future<LocationData?> findLocationData() async {
+    Location location = Location();
+    try {
+      return await location.getLocation();
+    } catch (e) {
+      // print('Could not get location: $e');
+      return null;
+    }
   }
 
   _getMarkersFromDB() async {
-    var url = 'http://192.168.1.101/flutter_login/getmapgarage.php';
+    var url = 'http://192.168.1.106/flutter_login/getmapgarage.php';
     var response = await http.get(Uri.parse(url));
     var markers = jsonDecode(response.body);
     for (var marker in markers) {
@@ -54,10 +76,11 @@ class _MapSampleState extends State<MapSample> {
       // myLocationEnabled: true,
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
-        target: LatLng(8.0878723, 98.9061776),
+        target: LatLng(lat1, lng1),
         zoom: 12.0,
       ),
       markers: _markers,
+      myLocationEnabled: true,
     );
   }
 }
@@ -142,7 +165,7 @@ class _MapSampleState extends State<MapSample> {
 //   }
 
 //   fetchMarkers() async {
-//     var url = 'http://192.168.1.101/flutter_login/getmapgarage.php';
+//     var url = 'http://192.168.1.106/flutter_login/getmapgarage.php';
 //     var connectivityResult = await (Connectivity().checkConnectivity());
 //     if (connectivityResult == ConnectivityResult.mobile ||
 //         connectivityResult == ConnectivityResult.wifi) {

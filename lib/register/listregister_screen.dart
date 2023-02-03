@@ -28,7 +28,7 @@ class _regisbodyState extends State<regisbody> {
 
   Future register() async {
     var url = Uri.http(
-        "192.168.1.101", '/flutter_login/register.php', {'q': '{http}'});
+        "192.168.1.106", '/flutter_login/register.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       "username": user.text.toString(),
       "password": pass.text.toString(),

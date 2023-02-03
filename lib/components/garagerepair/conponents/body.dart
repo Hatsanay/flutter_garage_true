@@ -13,6 +13,7 @@ import 'package:location/location.dart';
 import 'package:never_behind_keyboard/never_behind_keyboard.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class repairBody extends StatefulWidget {
   final Map<String, dynamic> garage;
@@ -47,11 +48,17 @@ class _repairBodyState extends State<repairBody> {
 
   late String latti1, lngji1;
 
+  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints = PolylinePoints();
+  String googleAPiKey = "AIzaSyDh5u_5MGZbFpzKlgrG2RCOiwaX1bchfZA";
+
   @override
   void initState() {
     super.initState();
     // garage = widget.garage;
     findlatlng1();
+    _getPolyline();
   }
 
   Future<Null> findlatlng1() async {
@@ -99,7 +106,7 @@ class _repairBodyState extends State<repairBody> {
 
   Future postrepair() async {
     var url = Uri.http(
-        "192.168.1.101", '/flutter_login/postrepair.php', {'q': '{http}'});
+        "192.168.1.106", '/flutter_login/postrepair.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       "repairreqfullname": repairreqfullname.text.toString(),
       "repairreqtel": repairreqtel.text.toString(),
@@ -449,16 +456,16 @@ class _repairBodyState extends State<repairBody> {
       );
     }
 
-    Marker userMarker() {
-      return Marker(
-        markerId: MarkerId(
-          'userMarker',
-        ),
-        position: LatLng(lat1, lng1),
-        icon: BitmapDescriptor.defaultMarkerWithHue(240.0),
-        infoWindow: InfoWindow(title: 'คุณอยู่ที่นี่'),
-      );
-    }
+    // Marker userMarker() {
+    //   return Marker(
+    //     markerId: MarkerId(
+    //       'userMarker',
+    //     ),
+    //     position: LatLng(lat1, lng1),
+    //     icon: BitmapDescriptor.defaultMarkerWithHue(240.0),
+    //     infoWindow: InfoWindow(title: 'คุณอยู่ที่นี่'),
+    //   );
+    // }
 
     Marker garagerMarker() {
       return Marker(
@@ -474,7 +481,10 @@ class _repairBodyState extends State<repairBody> {
     }
 
     Set<Marker> mySet() {
-      return <Marker>[userMarker(), garagerMarker()].toSet();
+      return <Marker>[
+        // userMarker(),
+        garagerMarker(),
+      ].toSet();
     }
 
     return Container(
@@ -487,8 +497,31 @@ class _repairBodyState extends State<repairBody> {
               mapType: MapType.normal,
               onMapCreated: (controller) {},
               markers: mySet(),
+              myLocationEnabled: true,
+              polylines: Set<Polyline>.of(polylines.values),
             ),
     );
+  }
+
+  _addPolyLine() {
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(
+        polylineId: id, color: Colors.red, points: polylineCoordinates);
+    polylines[id] = polyline;
+    setState(() {});
+  }
+
+  _getPolyline() async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        googleAPiKey, PointLatLng(lat1, lng1), PointLatLng(lat2, lng2),
+        travelMode: TravelMode.driving,
+        wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")]);
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+    _addPolyLine();
   }
 
   final ButtonStyle UserregisButtonStyle = ElevatedButton.styleFrom(
