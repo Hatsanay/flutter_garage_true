@@ -3,6 +3,7 @@ import 'package:flutter_garage_true/components/home/home_screen.dart';
 import 'package:flutter_garage_true/components/list/components/body.dart';
 import 'package:flutter_garage_true/components/notification/components/body.dart';
 import 'package:flutter_garage_true/components/notification/home_screen.dart';
+import 'package:flutter_garage_true/components/profile/profile_screen.dart';
 import 'package:flutter_garage_true/constans.dart';
 import 'package:flutter/material.dart';
 
@@ -226,7 +227,7 @@ class _listScreenState extends State<listScreen> {
                     PageRouteBuilder(
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return homeBody(
+                          return profileScreen(
                             id: widget.id,
                             username: widget.username,
                             proflie: widget.proflie,
@@ -239,6 +240,7 @@ class _listScreenState extends State<listScreen> {
                             garageonoff: widget.garageonoff,
                             ownerid: widget.ownerid,
                             garagedeegree: widget.garagedeegree,
+                            title: '',
                           );
                           // profileScreen(
                           //   title: 'โปรไฟล์',
@@ -273,7 +275,7 @@ class _listScreenState extends State<listScreen> {
       elevation: 0,
       backgroundColor: kappbar,
       title: Text(
-        'แจ้งเตือน',
+        'ประวัติการแจ้งซ่อม',
         style: TextStyle(
           color: kPrimaryColor,
           fontWeight: FontWeight.normal,

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_garage_true/components/list/components/detaiPage.dart';
 import 'package:flutter_garage_true/components/list/dtllist_screen.dart';
+import 'package:flutter_garage_true/components/mechaniclist/components/detaiPage.dart';
+import 'package:flutter_garage_true/components/mechaniclist/dtllist_screen.dart';
 import 'package:flutter_garage_true/components/notification/dtlnoti_screen.dart';
 import 'package:flutter_garage_true/constans.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
-class itemlistrepair extends StatefulWidget {
+class mechanicitemlistrepair extends StatefulWidget {
   final Map<String, dynamic> garage;
   final String username;
 
@@ -17,38 +19,34 @@ class itemlistrepair extends StatefulWidget {
 
   final String proflie;
 
-  final String garageid;
-  final String garagename;
-  final String garagetel;
-  final String garagelattitude;
-  final String garagelonggitude;
-  final String garageprofile;
-  final String garageonoff;
-  final String ownerid;
-  final String garagedeegree;
+  final String mechanicid;
+  final String mechanicfullname;
+  final String mechanicsex;
+  final String mechanicbirthday;
+  final String mechanictel;
+  final String mechanicprofile;
+  final String mechaniconoff;
 
-  itemlistrepair({
+  mechanicitemlistrepair({
     required this.garage,
     required String title,
     required this.username,
     required this.proflie,
-    required this.garageid,
-    required this.garagename,
-    required this.garagetel,
-    required this.garagelattitude,
-    required this.garagelonggitude,
-    required this.garageprofile,
-    required this.garageonoff,
-    required this.ownerid,
-    required this.garagedeegree,
+    required this.mechanicid,
+    required this.mechanicfullname,
+    required this.mechanicsex,
+    required this.mechanicbirthday,
+    required this.mechanictel,
+    required this.mechanicprofile,
+    required this.mechaniconoff,
     required this.id,
   });
 
   @override
-  State<itemlistrepair> createState() => _itemlistrepairState();
+  State<mechanicitemlistrepair> createState() => _mechanicitemlistrepairState();
 }
 
-class _itemlistrepairState extends State<itemlistrepair> {
+class _mechanicitemlistrepairState extends State<mechanicitemlistrepair> {
   showstatus2() {
     if (int.parse(widget.garage['repairreqstatus']) == 1) {
       return Text(
@@ -97,21 +95,19 @@ class _itemlistrepairState extends State<itemlistrepair> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => dtllistScreen(
+                          builder: (context) => mechanicdtllistScreen(
                                 garage: widget.garage,
                                 id: widget.id,
                                 proflie: widget.proflie,
                                 title: '',
                                 username: widget.username,
-                                garageid: widget.garageid,
-                                garagename: widget.garagename,
-                                garagetel: widget.garagetel,
-                                garagelattitude: widget.garagelattitude,
-                                garagelonggitude: widget.garagelonggitude,
-                                garageprofile: widget.garageprofile,
-                                garageonoff: widget.garageonoff,
-                                ownerid: widget.ownerid,
-                                garagedeegree: widget.garagedeegree,
+                                mechanicid: widget.mechanicid,
+                                mechanicfullname: widget.mechanicfullname,
+                                mechanicsex: widget.mechanicsex,
+                                mechanicbirthday: widget.mechanicbirthday,
+                                mechanictel: widget.mechanictel,
+                                mechanicprofile: widget.mechanicprofile,
+                                mechaniconoff: widget.mechaniconoff,
                               )));
                 },
                 child: Row(

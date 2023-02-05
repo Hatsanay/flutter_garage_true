@@ -2,6 +2,7 @@ import 'package:flutter_garage_true/components/home/components/body.dart';
 import 'package:flutter_garage_true/components/home/home_screen.dart';
 import 'package:flutter_garage_true/components/list/list_screen.dart';
 import 'package:flutter_garage_true/components/notification/components/body.dart';
+import 'package:flutter_garage_true/components/profile/profile_screen.dart';
 import 'package:flutter_garage_true/constans.dart';
 import 'package:flutter/material.dart';
 
@@ -222,7 +223,7 @@ class _NotiScreenState extends State<NotiScreen> {
                     PageRouteBuilder(
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return homeBody(
+                          return profileScreen(
                             id: widget.id,
                             username: widget.username,
                             proflie: widget.proflie,
@@ -235,6 +236,7 @@ class _NotiScreenState extends State<NotiScreen> {
                             garageonoff: widget.garageonoff,
                             ownerid: widget.ownerid,
                             garagedeegree: widget.garagedeegree,
+                            title: '',
                           );
                           // profileScreen(
                           //   title: 'โปรไฟล์',

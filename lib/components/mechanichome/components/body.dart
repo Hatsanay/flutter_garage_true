@@ -3,44 +3,42 @@ import 'package:flutter_garage_true/constans.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class homeBody extends StatefulWidget {
+class mechanichomeBody extends StatefulWidget {
   final String username;
   final String id;
   final String proflie;
 
-  final String garageid;
-  final String garagename;
-  final String garagetel;
-  final String garagelattitude;
-  final String garagelonggitude;
-  final String garageprofile;
-  final String garageonoff;
-  final String ownerid;
-  final String garagedeegree;
+  final String mechanicid;
+  final String mechanicfullname;
+  final String mechanicsex;
+  final String mechanicbirthday;
+  final String mechanictel;
+  final String mechanicprofile;
+  final String mechaniconoff;
 
-  homeBody({
+  mechanichomeBody({
     Key? key,
     required this.username,
     required this.id,
     required this.proflie,
-    required this.garageid,
-    required this.garagename,
-    required this.garagetel,
-    required this.garagelattitude,
-    required this.garagelonggitude,
-    required this.garageprofile,
-    required this.garageonoff,
-    required this.ownerid,
-    required this.garagedeegree,
+    required this.mechanicid,
+    required this.mechanicfullname,
+    required this.mechanicsex,
+    required this.mechanicbirthday,
+    required this.mechanictel,
+    required this.mechanicprofile,
+    required this.mechaniconoff,
   }) : super(key: key);
   @override
-  State<homeBody> createState() => _homeBodyState();
+  State<mechanichomeBody> createState() => _mechanichomeBodyState();
 }
 
-class _homeBodyState extends State<homeBody> {
+class _mechanichomeBodyState extends State<mechanichomeBody> {
   String _response = 'No response yet';
   @override
   void initState() {
+    repairnoti(widget.mechanicid);
+    _getamountlist(widget.mechanicid);
     super.initState();
     // _sendRequest();
   }
@@ -82,9 +80,19 @@ class _homeBodyState extends State<homeBody> {
                     "การแจ้งเตือน",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  Text(
-                    "4",
-                    style: TextStyle(fontSize: 35, color: Colors.white),
+                  FutureBuilder(
+                    future: repairnoti.fetchData(widget.mechanicid),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data[0]["countnoti"].toString(),
+                          style: TextStyle(fontSize: 35, color: Colors.white),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    },
                   ),
                 ],
               ),
@@ -113,9 +121,19 @@ class _homeBodyState extends State<homeBody> {
                     "จำนวนการแจ้งซ่อม",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  Text(
-                    "3",
-                    style: TextStyle(fontSize: 35, color: Colors.white),
+                  FutureBuilder(
+                    future: _getamountlist.fetchData(widget.mechanicid),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data[0]["countlist"].toString(),
+                          style: TextStyle(fontSize: 35, color: Colors.white),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    },
                   ),
                 ],
               ),
@@ -132,13 +150,38 @@ class _homeBodyState extends State<homeBody> {
 }
 
 class repairnoti {
-  static Future<List<Map<String, dynamic>>> fetchData(String id) async {
+  repairnoti(String mechanicid);
+  static Future<List<Map<String, dynamic>>> fetchData(String mechanicid) async {
     // var url = 'http://192.168.1.106/flutter_login/getrepair.php';
     // var response = await http.get(Uri.parse(url));
-    var url = Uri.http(
-        "192.168.1.106", '/flutter_login/getrepair.php', {'q': '{http}'});
+    var url = Uri.http("192.168.1.106", '/flutter_machanic/getamountnoti.php',
+        {'q': '{http}'});
     var response = await http.post(url, body: {
-      "memid": id.toString(),
+      "mechanicid": mechanicid.toString(),
+
+      // "password": pass.text.toString(),
+      // "fullname": fullname.text.toString(),
+      // "tel": tel.text.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((d) => Map<String, dynamic>.from(d)).toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+}
+
+class _getamountlist {
+  _getamountlist(String mechanicid);
+  static Future<List<Map<String, dynamic>>> fetchData(String mechanicid) async {
+    // var url = 'http://192.168.1.106/flutter_login/getrepair.php';
+    // var response = await http.get(Uri.parse(url));
+    var url = Uri.http("192.168.1.106", '/flutter_machanic/getamountlist.php',
+        {'q': '{http}'});
+    var response = await http.post(url, body: {
+      "mechanicid": mechanicid.toString(),
 
       // "password": pass.text.toString(),
       // "fullname": fullname.text.toString(),

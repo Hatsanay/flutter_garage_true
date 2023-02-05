@@ -3,6 +3,7 @@ import 'package:flutter_garage_true/components/home/home_screen.dart';
 import 'package:flutter_garage_true/components/list/list_screen.dart';
 import 'package:flutter_garage_true/components/notification/components/detaiPage.dart';
 import 'package:flutter_garage_true/components/notification/home_screen.dart';
+import 'package:flutter_garage_true/components/profile/profile_screen.dart';
 import 'package:flutter_garage_true/components/repair_teaking.dart/repair_traking_page.dart';
 import 'package:flutter_garage_true/constans.dart';
 import 'package:flutter/material.dart';
@@ -215,7 +216,7 @@ class _repairtrakingScreenState extends State<repairtrakingScreen> {
                     PageRouteBuilder(
                         pageBuilder: (context, Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return homeBody(
+                          return profileScreen(
                             id: widget.id,
                             username: widget.username,
                             proflie: widget.proflie,
@@ -228,6 +229,7 @@ class _repairtrakingScreenState extends State<repairtrakingScreen> {
                             garageonoff: widget.garageonoff,
                             ownerid: widget.ownerid,
                             garagedeegree: widget.garagedeegree,
+                            title: '',
                           );
                           // profileScreen(
                           //   title: 'โปรไฟล์',

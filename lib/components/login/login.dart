@@ -2,6 +2,7 @@ import 'dart:convert' show jsonDecode;
 
 import 'package:flutter_garage_true/components/home/home_screen.dart';
 import 'package:flutter_garage_true/components/login/api_provider.dart';
+import 'package:flutter_garage_true/components/mechanichome/home_screen.dart';
 import 'package:flutter_garage_true/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -53,7 +54,7 @@ class _loginPageState extends State<loginPage> {
           id: data['id'],
           proflie: data['proflie'],
           title: 'หน้าแรก',
-          garageid: data['garageid1'],
+          garageid: data['garageid'],
           garagename: data['garagename'],
           garagetel: data['garagetel'],
           garagelattitude: data['garagelattitude'],
@@ -62,6 +63,51 @@ class _loginPageState extends State<loginPage> {
           garageonoff: data['garageonoff'],
           ownerid: data['ownerid'],
           garagedeegree: data['garagedeegree'],
+        ),
+      ));
+      _ctrlUsername.clear();
+      _ctrlPassword.clear();
+      setState(() {
+        msgError = "";
+      });
+      // }
+      // else if (data['level'] == "user") {
+      //   print(data['msg'] + " dan status : " + data['level']);
+      //   Navigator.of(context).push(MaterialPageRoute(
+      //       builder: (c) => HomePage(username: data['username'])));
+      //   _ctrlUsername.clear();
+      //   _ctrlPassword.clear();
+      //   setState(() {
+      //     msgError = "";
+      //   });
+    } else if (data['level'] == "3") {
+      print(data['msg'] +
+              " dan status : " +
+              data['level'] +
+              data['id'] +
+              data['proflie']
+          // data['garagename'] +
+          // data['garagetel'] +
+          // data['garagelattitude'] +
+          // data['garagelonggitude'] +
+          // data['garageprofile'] +
+          // data['garageonoff'] +
+          // data['ownerid'] +
+          // data['garagedeegree']
+          );
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (c) => mechanicHomeScreen(
+          username: data['username'],
+          id: data['id'],
+          proflie: data['mechanicprofile'],
+          title: 'หน้าแรก',
+          mechanicid: data['mechanicid'],
+          mechanicfullname: data['mechanicfullname'],
+          mechanicsex: data['mechanicsex'],
+          mechanicbirthday: data['mechanicbirthday'],
+          mechanictel: data['mechanictel'],
+          mechanicprofile: data['mechanicprofile'],
+          mechaniconoff: data['mechaniconoff'],
         ),
       ));
       _ctrlUsername.clear();
