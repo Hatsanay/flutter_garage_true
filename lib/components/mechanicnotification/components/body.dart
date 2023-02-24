@@ -46,7 +46,7 @@ class _mechanicNotiBodyState extends State<mechanicNotiBody> {
 
   // _getRepairs() async {
   //   // var url = 'http://yourserver.com/get_repairs.php';
-  //   var url = Uri.http("192.168.1.106", '/flutter_garage/get_repairs.php');
+  //   var url = Uri.http("192.168.1.100", '/flutter_garage/get_repairs.php');
   //   var response = await http.post(url, body: {
   //     'action': 'get_repairs',
   //     'garageid': widget.garageid.toString(),
@@ -58,7 +58,7 @@ class _mechanicNotiBodyState extends State<mechanicNotiBody> {
   // }
 
   _updateRepair(id, status) async {
-    var url = Uri.http("192.168.1.106", '/flutter_garage/update_repair.php');
+    var url = Uri.http("192.168.1.100", '/flutter_garage/update_repair.php');
     var response = await http.post(url,
         body: {'action': 'update_repair', 'id': id, 'status': status});
     print(response.body);
@@ -71,103 +71,36 @@ class _mechanicNotiBodyState extends State<mechanicNotiBody> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: _getRepairs2.fetchData(widget.mechanicid),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return mechanicitemrepair(
-                    garage: snapshot.data![index],
-                    id: widget.id,
-                    proflie: widget.proflie,
-                    title: '',
-                    username: widget.username,
-                    mechanicid: widget.mechanicid,
-                    mechanicfullname: widget.mechanicfullname,
-                    mechanicsex: widget.mechanicsex,
-                    mechanicbirthday: widget.mechanicbirthday,
-                    mechanictel: widget.mechanictel,
-                    mechanicprofile: widget.mechanicprofile,
-                    mechaniconoff: widget.mechaniconoff,
-                  );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Center(child: Text(""));
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-
-        // child: repairs.length > 0
-        //     ? ListView.builder(
-        //         itemCount: repairs.length,
-        //         itemBuilder: (context, index) {
-        //           return ListTile(
-        //             title: Text(repairs[index]['repair_person']),
-        //             subtitle:
-        //                 Text('Status: ${repairs[index]['repairreqstatus']}'),
-        //             onTap: () {
-        //               showDialog(
-        //                 context: context,
-        //                 builder: (BuildContext context) {
-        //                   return AlertDialog(
-        //                     title: Text('Update Repair Status'),
-        //                     content: Container(
-        //                       height: 100.0,
-        //                       child: Column(
-        //                         children: <Widget>[
-        //                           Text(
-        //                               'Current status: ${repairs[index]['repairreqstatus']}'),
-        //                           DropdownButton(
-        //                             items: [
-        //                               DropdownMenuItem(
-        //                                 child: Text('Waiting for confirmation'),
-        //                                 value: '1',
-        //                               ),
-        //                               DropdownMenuItem(
-        //                                 child: Text('Confirmed'),
-        //                                 value: '2',
-        //                               ),
-        //                               DropdownMenuItem(
-        //                                 child: Text('On the way'),
-        //                                 value: '3',
-        //                               ),
-        //                               DropdownMenuItem(
-        //                                 child: Text('Repair in progress'),
-        //                                 value: '4',
-        //                               ),
-        //                               DropdownMenuItem(
-        //                                 child: Text('Done'),
-        //                                 value: '5',
-        //                               ),
-        //                             ],
-        //                             onChanged: (value) {
-        //                               _updateRepair(
-        //                                   repairs[index]['repairreqid '],
-        //                                   value);
-        //                               Navigator.of(context).pop();
-        //                             },
-        //                             value: repairs[index]['repairreqstatus'],
-        //                           ),
-        //                         ],
-        //                       ),
-        //                     ),
-        //                   );
-        //                 },
-        //               );
-        //             },
-        //           );
-        //         },
-        //       )
-        //     : Center(
-        //         child: Text('No repair notifications'),
-        //       ),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: _getRepairs2.fetchData(widget.mechanicid),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data?.length,
+              itemBuilder: (context, index) {
+                return mechanicitemrepair(
+                  garage: snapshot.data![index],
+                  id: widget.id,
+                  proflie: widget.proflie,
+                  title: '',
+                  username: widget.username,
+                  mechanicid: widget.mechanicid,
+                  mechanicfullname: widget.mechanicfullname,
+                  mechanicsex: widget.mechanicsex,
+                  mechanicbirthday: widget.mechanicbirthday,
+                  mechanictel: widget.mechanictel,
+                  mechanicprofile: widget.mechanicprofile,
+                  mechaniconoff: widget.mechaniconoff,
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text(""));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
@@ -175,10 +108,10 @@ class _mechanicNotiBodyState extends State<mechanicNotiBody> {
 
 class _getRepairs2 {
   static Future<List<Map<String, dynamic>>> fetchData(String mechanicid) async {
-    // var url = 'http://192.168.1.106/flutter_login/getrepair.php';
+    // var url = 'http://192.168.1.100/flutter_login/getrepair.php';
     // var response = await http.get(Uri.parse(url));
     var url = Uri.http(
-        "192.168.1.106", '/flutter_machanic/get_repairs.php', {'q': '{http}'});
+        "192.168.1.100", '/flutter_machanic/get_repairs.php', {'q': '{http}'});
     var response = await http.post(url, body: {
       'mechanicid': mechanicid.toString(),
       // 'garageid': garageid.toString(),

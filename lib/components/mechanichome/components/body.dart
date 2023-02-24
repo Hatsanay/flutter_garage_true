@@ -152,9 +152,9 @@ class _mechanichomeBodyState extends State<mechanichomeBody> {
 class repairnoti {
   repairnoti(String mechanicid);
   static Future<List<Map<String, dynamic>>> fetchData(String mechanicid) async {
-    // var url = 'http://192.168.1.106/flutter_login/getrepair.php';
+    // var url = 'http://192.168.1.100/flutter_login/getrepair.php';
     // var response = await http.get(Uri.parse(url));
-    var url = Uri.http("192.168.1.106", '/flutter_machanic/getamountnoti.php',
+    var url = Uri.http("192.168.1.100", '/flutter_machanic/getamountnoti.php',
         {'q': '{http}'});
     var response = await http.post(url, body: {
       "mechanicid": mechanicid.toString(),
@@ -176,9 +176,9 @@ class repairnoti {
 class _getamountlist {
   _getamountlist(String mechanicid);
   static Future<List<Map<String, dynamic>>> fetchData(String mechanicid) async {
-    // var url = 'http://192.168.1.106/flutter_login/getrepair.php';
+    // var url = 'http://192.168.1.100/flutter_login/getrepair.php';
     // var response = await http.get(Uri.parse(url));
-    var url = Uri.http("192.168.1.106", '/flutter_machanic/getamountlist.php',
+    var url = Uri.http("192.168.1.100", '/flutter_machanic/getamountlist.php',
         {'q': '{http}'});
     var response = await http.post(url, body: {
       "mechanicid": mechanicid.toString(),

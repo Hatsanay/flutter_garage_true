@@ -72,48 +72,48 @@ class _MyWidgetState extends State<welbody> {
               style: LoginButtonStyle,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 465,
-              left: 13,
-              right: 5,
-            ),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                        pageBuilder: (context, Animation<double> animation,
-                            Animation<double> secondaryAnimation) {
-                          return welbody(
-                              // title: 'หน้าล็อกอิน',
-                              );
-                        },
-                        transitionsBuilder: (BuildContext context,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                            Widget child) {
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                              begin: Offset(-2.0, 0.0),
-                              end: Offset(0.0, 0.0),
-                            ).animate(animation),
-                            child: child,
-                          );
-                        },
-                        transitionDuration: Duration(seconds: 0)));
-              },
-              child: Text(
-                "ยังไม่เคยใช้ สมัครสมาชิก!",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.brown,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              style: RegisButtonStyle,
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //     top: 465,
+          //     left: 13,
+          //     right: 5,
+          //   ),
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //           context,
+          //           PageRouteBuilder(
+          //               pageBuilder: (context, Animation<double> animation,
+          //                   Animation<double> secondaryAnimation) {
+          //                 return welbody(
+          //                     // title: 'หน้าล็อกอิน',
+          //                     );
+          //               },
+          //               transitionsBuilder: (BuildContext context,
+          //                   Animation<double> animation,
+          //                   Animation<double> secondaryAnimation,
+          //                   Widget child) {
+          //                 return SlideTransition(
+          //                   position: Tween<Offset>(
+          //                     begin: Offset(-2.0, 0.0),
+          //                     end: Offset(0.0, 0.0),
+          //                   ).animate(animation),
+          //                   child: child,
+          //                 );
+          //               },
+          //               transitionDuration: Duration(seconds: 0)));
+          //     },
+          //     child: Text(
+          //       "ยังไม่เคยใช้ สมัครสมาชิก!",
+          //       style: TextStyle(
+          //         fontSize: 20,
+          //         color: Colors.brown,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //     style: RegisButtonStyle,
+          //   ),
+          // ),
         ],
       ),
     );

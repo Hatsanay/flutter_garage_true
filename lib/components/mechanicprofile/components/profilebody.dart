@@ -44,52 +44,56 @@ class _machanicprofilebodyState extends State<machanicprofilebody> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          // Container(
-          //   margin: EdgeInsets.all(10),
-          //   padding: EdgeInsets.all(50),
-          //   alignment: Alignment.center,
-          //   decoration: BoxDecoration(
-          //       color: kPrimaryColor,
-          //       border: Border.all(
-          //           color: kBackgoundColor, // Set border color
-          //           width: 3.0), // Set border width
-          //       borderRadius: BorderRadius.all(
-          //           Radius.circular(25.0)), // Set rounded corner radius
-          //       boxShadow: [
-          //         BoxShadow(
-          //             blurRadius: 10,
-          //             color: Color.fromARGB(255, 226, 118, 118),
-          //             offset: Offset(1, 3))
-          //       ] // Make rounded corner of border
-          //       ),
-          //   child: Column(
-          //     children: <Widget>[
-          //       CircleAvatar(
-          //         backgroundColor: Colors.black,
-          //         radius: 60,
-          //         child: CircleAvatar(
-          //           radius: 110,
-          //           backgroundImage: NetworkImage(widget.proflie),
-          //           // backgroundImage: AssetImage('assets/icons/'),
-          //         ),
-          //       ),
-          //       Text(
-          //         widget.username,
-          //         style: TextStyle(color: Colors.white, fontSize: 30),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // Text(
-          //   "ยังไม่พร้อมใช้งาน",
-          //   style: TextStyle(fontSize: 15),
-          // ),
-          Center(
-            child: Text(
-              "ยังไม่พร้อมใช้งาน",
-              style: TextStyle(fontSize: 15),
+          Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(50),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: kPrimaryColor,
+                border: Border.all(
+                    color: kBackgoundColor, // Set border color
+                    width: 3.0), // Set border width
+                borderRadius: BorderRadius.all(
+                    Radius.circular(25.0)), // Set rounded corner radius
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 10,
+                      color: Color.fromARGB(255, 226, 118, 118),
+                      offset: Offset(1, 3))
+                ] // Make rounded corner of border
+                ),
+            child: Column(
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: Colors.black,
+                  radius: 60,
+                  child: CircleAvatar(
+                    radius: 110,
+                    backgroundImage: NetworkImage(widget.mechanicprofile),
+                    // backgroundImage: AssetImage('assets/icons/'),
+                  ),
+                ),
+                Text(
+                  widget.mechanicfullname,
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                ),
+                Text(
+                  "ผู้ใช้งาน : ช่าง",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ],
             ),
           ),
+          Text(
+            "ยังไม่พร้อมใช้งาน",
+            style: TextStyle(fontSize: 15),
+          ),
+          // Center(
+          //   child: Text(
+          //     "ยังไม่พร้อมใช้งาน",
+          //     style: TextStyle(fontSize: 15),
+          //   ),
+          // ),
         ],
       ),
     );

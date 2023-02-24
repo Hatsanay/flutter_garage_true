@@ -38,6 +38,7 @@ class _loginPageState extends State<loginPage> {
               data['level'] +
               data['fullname'] +
               data['id'] +
+              data['username'] +
               data['proflie']
           // data['garagename'] +
           // data['garagetel'] +
@@ -50,7 +51,7 @@ class _loginPageState extends State<loginPage> {
           );
       Navigator.of(context).push(MaterialPageRoute(
         builder: (c) => HomeScreen(
-          username: data['fullname'],
+          username: data['username'],
           id: data['id'],
           proflie: data['proflie'],
           title: 'หน้าแรก',
@@ -85,6 +86,7 @@ class _loginPageState extends State<loginPage> {
               " dan status : " +
               data['level'] +
               data['id'] +
+              data['username'] +
               data['proflie']
           // data['garagename'] +
           // data['garagetel'] +

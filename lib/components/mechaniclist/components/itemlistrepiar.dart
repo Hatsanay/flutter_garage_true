@@ -197,7 +197,7 @@ class _mechanicitemlistrepairState extends State<mechanicitemlistrepair> {
 
 // class repairProvider {
 //   static Future<List<Map<String, dynamic>>> fetchData() async {
-//     var url = 'http://192.168.1.106/flutter_login/getlistgarage.php';
+//     var url = 'http://192.168.1.100/flutter_login/getlistgarage.php';
 //     var response = await http.get(Uri.parse(url));
 //     if (response.statusCode == 200) {
 //       final List<dynamic> data = jsonDecode(response.body);

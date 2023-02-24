@@ -383,7 +383,7 @@ class _mechanicDetailPageState extends State<mechanicDetailPage> {
                     ),
                   ],
                   onChanged: (value) async {
-                    var url = Uri.http("192.168.1.106",
+                    var url = Uri.http("192.168.1.100",
                         '/flutter_machanic/update_repair_status.php');
                     var response = await http.post(url, body: {
                       'action': 'update_repair_status',

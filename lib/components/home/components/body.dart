@@ -41,6 +41,8 @@ class _homeBodyState extends State<homeBody> {
   String _response = 'No response yet';
   @override
   void initState() {
+    repairnoti(widget.garageid);
+    _getamountlist(widget.garageid);
     super.initState();
     // _sendRequest();
   }
@@ -82,9 +84,19 @@ class _homeBodyState extends State<homeBody> {
                     "การแจ้งเตือน",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  Text(
-                    "4",
-                    style: TextStyle(fontSize: 35, color: Colors.white),
+                  FutureBuilder(
+                    future: repairnoti.fetchData(widget.garageid),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data[0]["countnoti"].toString(),
+                          style: TextStyle(fontSize: 35, color: Colors.white),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    },
                   ),
                 ],
               ),
@@ -113,9 +125,19 @@ class _homeBodyState extends State<homeBody> {
                     "จำนวนการแจ้งซ่อม",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  Text(
-                    "3",
-                    style: TextStyle(fontSize: 35, color: Colors.white),
+                  FutureBuilder(
+                    future: _getamountlist.fetchData(widget.garageid),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data[0]["countlist"].toString(),
+                          style: TextStyle(fontSize: 35, color: Colors.white),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    },
                   ),
                 ],
               ),
@@ -131,14 +153,62 @@ class _homeBodyState extends State<homeBody> {
   }
 }
 
+// class repairnoti {
+//   static Future<List<Map<String, dynamic>>> fetchData(String id) async {
+//     // var url = 'http://192.168.1.100/flutter_login/getrepair.php';
+//     // var response = await http.get(Uri.parse(url));
+//     var url = Uri.http(
+//         "192.168.1.100", '/flutter_login/getrepair.php', {'q': '{http}'});
+//     var response = await http.post(url, body: {
+//       "memid": id.toString(),
+
+//       // "password": pass.text.toString(),
+//       // "fullname": fullname.text.toString(),
+//       // "tel": tel.text.toString(),
+//     });
+
+//     if (response.statusCode == 200) {
+//       final List<dynamic> data = jsonDecode(response.body);
+//       return data.map((d) => Map<String, dynamic>.from(d)).toList();
+//     } else {
+//       throw Exception('Failed to load data');
+//     }
+//   }
+// }
+
 class repairnoti {
-  static Future<List<Map<String, dynamic>>> fetchData(String id) async {
-    // var url = 'http://192.168.1.106/flutter_login/getrepair.php';
+  repairnoti(String mechanicid);
+  static Future<List<Map<String, dynamic>>> fetchData(String garageid) async {
+    // var url = 'http://192.168.1.100/flutter_login/getrepair.php';
     // var response = await http.get(Uri.parse(url));
     var url = Uri.http(
-        "192.168.1.106", '/flutter_login/getrepair.php', {'q': '{http}'});
+        "192.168.1.100", '/flutter_garage/getamountnoti.php', {'q': '{http}'});
     var response = await http.post(url, body: {
-      "memid": id.toString(),
+      "garageid": garageid.toString(),
+
+      // "password": pass.text.toString(),
+      // "fullname": fullname.text.toString(),
+      // "tel": tel.text.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((d) => Map<String, dynamic>.from(d)).toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+}
+
+class _getamountlist {
+  _getamountlist(String mechanicid);
+  static Future<List<Map<String, dynamic>>> fetchData(String garageid) async {
+    // var url = 'http://192.168.1.100/flutter_login/getrepair.php';
+    // var response = await http.get(Uri.parse(url));
+    var url = Uri.http(
+        "192.168.1.100", '/flutter_garage/getamountlist.php', {'q': '{http}'});
+    var response = await http.post(url, body: {
+      "garageid": garageid.toString(),
 
       // "password": pass.text.toString(),
       // "fullname": fullname.text.toString(),
